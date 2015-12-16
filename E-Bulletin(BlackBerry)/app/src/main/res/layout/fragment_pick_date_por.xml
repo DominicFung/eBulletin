@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/DatePickerRelativeLayout"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Bulletin Archive "
+        android:id="@+id/textView17"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="retrieve"
+        android:id="@+id/buttonRetrieve"
+        android:layout_marginTop="76dp"
+        android:layout_below="@+id/MonthPicker"
+        android:layout_centerHorizontal="true" />
+
+    <NumberPicker
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/MonthPicker"
+        android:layout_marginTop="75dp"
+        android:layout_below="@+id/textView17"
+        android:layout_centerHorizontal="true" />
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/DayPicker"
+        android:layout_alignTop="@+id/MonthPicker"
+        android:layout_toRightOf="@+id/MonthPicker"
+        android:layout_toEndOf="@+id/MonthPicker" />
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/YearPicker"
+        android:layout_alignTop="@+id/MonthPicker"
+        android:layout_toLeftOf="@+id/MonthPicker"
+        android:layout_toStartOf="@+id/MonthPicker" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Choose the Bulletin Issue Date:"
+        android:id="@+id/textView18"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/YearPicker"
+        android:layout_marginBottom="10dp" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar2"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:progressDrawable="@drawable/progressbar"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView31"
+        android:layout_above="@+id/progressBar2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="back"
+        android:id="@+id/backButton2"
+        android:background="@null"
+        android:singleLine="true"
+        android:layout_alignTop="@+id/buttonRetrieve"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:textColor="#ff0000ff" />
+
+</RelativeLayout>
