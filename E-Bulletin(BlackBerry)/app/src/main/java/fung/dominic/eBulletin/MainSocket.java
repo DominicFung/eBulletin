@@ -49,7 +49,7 @@ public class MainSocket extends Fragment {
     AlertDialog ShowAlert;
     static final String MAINSOC_DELAYER_ID = "MainSock Delayer";
     public static final String IPaddress = "192.0.215.122";//192.168.2.107
-    public static final int PORT = 13269;
+    public static final int PORT = 8203;
     public static final String ServerStatusMode = "ServerStatus";
     ProgressBar loadCircle;
     AlertDialog.Builder UnknownHost, timeOut;

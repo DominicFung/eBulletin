@@ -32,18 +32,16 @@ public class MyGcmListenerService extends GcmListenerService {
 
         if(Status.equals("online")){
             editor.putBoolean(MainSocket.ServerStatusMode, true);
-            sendNotification("Server: Online", "The Server is now online");
-            Log.i(TAG, "Status \""+ Status + "\" set");
-        }else if(Status.equals("offline")){
-            editor.putBoolean(MainSocket.ServerStatusMode, false);
-            sendNotification("Server: Offline", "The Server is now offline");
-            Log.i(TAG, "Status \"" + Status + "\" sent");
-        }else if(Status.equals("globalmsg")){
-            editor.putBoolean(MainSocket.ServerStatusMode, true); // this assumes that all globalmsgs indicate that Server is coming online
             String message = data.getString("message");
             String title = data.getString("title");
             sendNotification(title, message);
-            Log.i(TAG, "Status \"" + Status + "\" sent to PageScroll");
+            Log.i(TAG, "Status \""+ Status + "\" set");
+        }else if(Status.equals("offline")){
+            editor.putBoolean(MainSocket.ServerStatusMode, false);
+            String message = data.getString("message");
+            String title = data.getString("title");
+            sendNotification(title, message);
+            Log.i(TAG, "Status \"" + Status + "\" sent");
         }else{
             Log.i(TAG, "This should never happen");
         }
