@@ -47,7 +47,6 @@ public class MainSocket extends Fragment {
     TextView textResponse, percentage;
     Button buttonConnect, buttonPref, buttonHelp, buttonOpenWith, buttonArchive;
     AlertDialog ShowAlert;
-    static final String MAINSOC_DELAYER_ID = "MainSock Delayer";
     public static final String IPaddress = "192.0.215.122";//192.168.2.107
     public static final int PORT = 8203;
     public static final String ServerStatusMode = "ServerStatus";
@@ -58,7 +57,6 @@ public class MainSocket extends Fragment {
     View v;
     NotificationManager nm;
     private int bytesDownloaded, SaveTotalBytes;
-    boolean CallFromWithin = false;
 
     public static boolean isOpenable;
 
@@ -66,6 +64,10 @@ public class MainSocket extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+
+        SharedPreferences settings = this.getActivity().getSharedPreferences(PageScroll.PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(QuickstartPreferences.WAS_DOWNLOADING, false).apply();
     }
 
     @Override
@@ -108,12 +110,11 @@ public class MainSocket extends Fragment {
         if(settings.getBoolean(QuickstartPreferences.WAS_DOWNLOADING, false)){
             percentage.setVisibility(View.VISIBLE);
             loadCircle.setVisibility(View.VISIBLE);
-            if (settings.getBoolean(MAINSOC_DELAYER_ID, false)){
-                loadCircle.setProgress(100);
-                percentage.setText("100%");
-                percentage.setTextSize(40);
-                percentage.setTextColor(Color.parseColor("#0000FF"));
-            }
+            loadCircle.setProgress(100);
+            percentage.setText("100%");
+            percentage.setTextSize(40);
+            percentage.setTextColor(Color.parseColor("#0000FF"));
+
         }
 
         buttonConnect.setOnClickListener(buttonConnectOnClickListener);
@@ -136,13 +137,14 @@ public class MainSocket extends Fragment {
     public void onResume() {
         super.onResume();
 
+        Log.i("MainSocket","onResume");
+
         PageScroll.mainSockFrag = this;
 
         SharedPreferences settings = getActivity().getSharedPreferences(PageScroll.PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
 
-        if(settings.getBoolean(QuickstartPreferences.WAS_DOWNLOADING, false)
-                && settings.getBoolean(MAINSOC_DELAYER_ID, false)){
+        if(settings.getBoolean(QuickstartPreferences.WAS_DOWNLOADING, false)){
 
             UnknownHost = new AlertDialog.Builder(MainSocket.this.getActivity());
             UnknownHost.setTitle("CONNECTION UNFOUND");
@@ -227,22 +229,12 @@ public class MainSocket extends Fragment {
                 loadCircle.setVisibility(View.GONE);
             }
         }
-
-        editor.putBoolean(MAINSOC_DELAYER_ID, false).apply();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-
-        if (!CallFromWithin) {
-
-            PageScroll.mainSockFrag = null;
-
-            SharedPreferences settings = getActivity().getSharedPreferences(PageScroll.PREFS_NAME, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putBoolean(MAINSOC_DELAYER_ID, true).apply();
-        }
+        Log.i("MainSocket", "onPause");
     }
 
     public static void setOnlineLook(final Fragment f){
@@ -462,8 +454,6 @@ public class MainSocket extends Fragment {
                 socket = new Socket();
                 socket.connect(new InetSocketAddress(dstAddress, dstPort), 6000);
 
-                editor.putBoolean(QuickstartPreferences.WAS_DOWNLOADING, true).apply();
-
                 InputStream inputStream = socket.getInputStream();
                 PrintWriter pw = new PrintWriter(socket.getOutputStream(),true);
 
@@ -522,41 +512,38 @@ public class MainSocket extends Fragment {
 
                     isOpenable = true;
 
-                    if(!settings.getBoolean(MAINSOC_DELAYER_ID, false)) {
-                        CallFromWithin = true;
-                        if (settings.getBoolean(PageScroll.ReaderMode, true)) {
-                            Uri uri = ToExternalStorage.ToExternalStorage(as, ToExternalStorage.DEFAULT_NAME);
+                    if (settings.getBoolean(PageScroll.ReaderMode, true)) {
+                        Uri uri = ToExternalStorage.ToExternalStorage(as, ToExternalStorage.DEFAULT_NAME);
 
-                            if (uri == null) {
-                                QuickstartPreferences.postingMsg(MainSocket.this, "Unable to update external");
-                            }
+                        if (uri == null) {
+                            QuickstartPreferences.postingMsg(MainSocket.this, "Unable to update external");
+                        }
 
-                            if (ToExternalStorage.isExternalStorageReadable()) {
-                                try {
-                                    Intent i = new Intent(Intent.ACTION_VIEW);
-
-                                    i.setDataAndType(uri, "application/pdf");
-                                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                                    startActivity(i);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    QuickstartPreferences.postingMsg(MainSocket.this, "No Application available to view pdf");
-                                }
-                            } else {
-                                QuickstartPreferences.postingMsg(MainSocket.this, "Unable to read from external");
-                            }
-                        } else {
+                        if (ToExternalStorage.isExternalStorageReadable()) {
                             try {
-                                Intent i = new Intent(MainSocket.this.getActivity(), ShowBulletin.class);
-                                String str = as.getPath();
+                                Intent i = new Intent(Intent.ACTION_VIEW);
 
-                                i.putExtra(PdfViewerActivity.EXTRA_PDFFILENAME, str);
+                                i.setDataAndType(uri, "application/pdf");
+                                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
                                 startActivity(i);
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                return null;
+                                QuickstartPreferences.postingMsg(MainSocket.this, "No Application available to view pdf");
                             }
+                        } else {
+                            QuickstartPreferences.postingMsg(MainSocket.this, "Unable to read from external");
+                        }
+                    } else {
+                        try {
+                            Intent i = new Intent(MainSocket.this.getActivity(), ShowBulletin.class);
+                            String str = as.getPath();
+
+                            i.putExtra(PdfViewerActivity.EXTRA_PDFFILENAME, str);
+                            startActivity(i);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            return null;
                         }
                     }
                 }
@@ -588,7 +575,6 @@ public class MainSocket extends Fragment {
                 response = "IOException: " + e.toString();
 
             }finally{
-                CallFromWithin = false;
                 if(socket != null){
                     try {
                         socket.close();
@@ -620,7 +606,7 @@ public class MainSocket extends Fragment {
             SharedPreferences settings = MainSocket.this.getActivity().getSharedPreferences(PageScroll.PREFS_NAME, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = settings.edit();
 
-            if (settings.getBoolean(MAINSOC_DELAYER_ID, false)){
+            if (MainSocket.this.getActivity().hasWindowFocus()){
                 editor.putBoolean(QuickstartPreferences.WAS_DOWNLOADING, false).apply();
                 customViewPager vp = (customViewPager) getActivity().findViewById(R.id.pager);
                 vp.setPSEnabled(true);
@@ -641,6 +627,7 @@ public class MainSocket extends Fragment {
             }else{
 
                 editor.putInt(hasErrorID, hasError);
+                editor.putBoolean(QuickstartPreferences.WAS_DOWNLOADING, true);
                 editor.apply();
 
                 Intent intent = new Intent(MainSocket.this.getActivity(), BootupPage.class);

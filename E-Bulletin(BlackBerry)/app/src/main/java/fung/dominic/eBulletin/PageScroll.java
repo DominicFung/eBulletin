@@ -218,6 +218,11 @@ public class PageScroll extends FragmentActivity implements Observer{
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         Log.i("PageScroll","OnResume called");
 
+        if (!QuickstartPreferences.isAndroid){
+            ConnectServer ServerCheck = new ConnectServer();
+            ServerCheck.execute();
+        }
+
         if (("".equals(settings.getString(RegistrationIntentService.RegIDTag,"")) || settings.getBoolean(QuickstartPreferences.TRY_REREG,false))){
 
             SharedPreferences.Editor editor = settings.edit();
@@ -232,10 +237,7 @@ public class PageScroll extends FragmentActivity implements Observer{
     @Override
     protected void onPause() {
         super.onPause();
-
         Log.i("PageScroll", "OnPause called");
-
-        //QuickstartPreferences.outOfScreen = true;
     }
 
     OnClickListener buttonCheckUpdatesOnClickListener = new View.OnClickListener(){

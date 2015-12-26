@@ -34,6 +34,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 
 import fung.dominic.eBulletin.GCMconnection.QuickstartPreferences;
+import fung.dominic.eBulletin.GCMconnection.RegistrationIntentService;
 
 public class BootupPage extends Activity{
 
@@ -65,6 +66,11 @@ public class BootupPage extends Activity{
         SharedPreferences settings = getSharedPreferences(PageScroll.PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(QuickstartPreferences.WAS_DOWNLOADING,false).apply();
+
+        if (QuickstartPreferences.isAndroid){
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
 
     }
 
@@ -155,7 +161,6 @@ public class BootupPage extends Activity{
     @Override
     protected void onPause() {
         super.onPause();
-
         Log.i("BootupPage", "OnPaused Called");
     }
 
