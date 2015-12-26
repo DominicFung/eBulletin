@@ -38,7 +38,6 @@ import fung.dominic.eBulletin.GCMconnection.QuickstartPreferences;
 public class BootupPage extends Activity{
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    static final String BOOTUP_DELAYER_ID = "Bootup Delayer";
 
     private boolean isDone = false;
     ProgressBar progress;
@@ -62,6 +61,11 @@ public class BootupPage extends Activity{
         MainSocket.isOpenable = true;
 
         nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+        SharedPreferences settings = getSharedPreferences(PageScroll.PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(QuickstartPreferences.WAS_DOWNLOADING,false).apply();
+
     }
 
     @Override
@@ -74,13 +78,30 @@ public class BootupPage extends Activity{
         editor.putBoolean(QuickstartPreferences.TRY_REREG, true);
         editor.apply();
 
-        if (true) { // use checkPlayServices() on android devices
-            // registration happens in resume of PageScroll
+        if (QuickstartPreferences.isAndroid) {  // use checkPlayServices() on android devices
+                                                // registration happens in resume of PageScroll
+            if (checkPlayServices()) {
 
+                Log.i("BootupPage", "in onStart");
+
+                boolean AutoConnect = settings.getBoolean(PageScroll.AutoConnectMode, false);
+                if (AutoConnect) {
+
+                    ConnectServer OnlineServer = new ConnectServer(MainSocket.IPaddress, MainSocket.PORT);
+                    OnlineServer.execute();
+
+                } else {
+
+                    waitTime ToMainPage = new waitTime();
+                    ToMainPage.execute();
+
+                }
+            }
+        }else{
             Log.i("BootupPage", "in onStart");
 
             boolean AutoConnect = settings.getBoolean(PageScroll.AutoConnectMode, false);
-            if(AutoConnect) {
+            if (AutoConnect) {
 
                 ConnectServer OnlineServer = new ConnectServer(MainSocket.IPaddress, MainSocket.PORT);
                 OnlineServer.execute();
@@ -102,13 +123,10 @@ public class BootupPage extends Activity{
 
         SharedPreferences settings = getSharedPreferences(PageScroll.PREFS_NAME, MODE_PRIVATE);
 
-        if(settings.getBoolean(QuickstartPreferences.WAS_DOWNLOADING, false) && settings.getBoolean(BOOTUP_DELAYER_ID,false)) {
+        if(settings.getBoolean(QuickstartPreferences.WAS_DOWNLOADING, false)) {
 
             SharedPreferences.Editor editor = settings.edit();
-
-            editor.putBoolean(BOOTUP_DELAYER_ID, false);
             editor.putBoolean(QuickstartPreferences.WAS_DOWNLOADING, false);
-
             editor.putBoolean(QuickstartPreferences.TRY_REREG, !QuickstartPreferences.isAndroid);
             editor.apply();
 
@@ -139,10 +157,6 @@ public class BootupPage extends Activity{
         super.onPause();
 
         Log.i("BootupPage", "OnPaused Called");
-
-        SharedPreferences settings = getSharedPreferences(PageScroll.PREFS_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(BOOTUP_DELAYER_ID, true).apply();
     }
 
     private boolean checkPlayServices() {
@@ -210,13 +224,9 @@ public class BootupPage extends Activity{
             Socket socket = null;
             SharedPreferences settings = BootupPage.this.getSharedPreferences(PageScroll.PREFS_NAME, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = settings.edit();
-
-
             try {
                 socket = new Socket();
                 socket.connect(new InetSocketAddress(dstAddress, dstPort), 6000);
-
-                editor.putBoolean(QuickstartPreferences.WAS_DOWNLOADING, true).apply();
 
                 InputStream inputStream = socket.getInputStream();
                 PrintWriter pw = new PrintWriter(socket.getOutputStream(),true);
@@ -239,7 +249,7 @@ public class BootupPage extends Activity{
 
                 Log.i("BootupPage", "Date of file: " + SaveDate);
 
-                editor.putString(QuickstartPreferences.CURRENT_PDF_DATE,SaveDate);
+                editor.putString(QuickstartPreferences.CURRENT_PDF_DATE, SaveDate);
                 editor.apply();
 
 
@@ -323,9 +333,9 @@ public class BootupPage extends Activity{
             SharedPreferences settings = getSharedPreferences(PageScroll.PREFS_NAME, MODE_PRIVATE);
             SharedPreferences.Editor editor = settings.edit();
 
-            if(!settings.getBoolean(BOOTUP_DELAYER_ID, false)) {
+            if(hasWindowFocus()) {
 
-                editor.putBoolean(QuickstartPreferences.WAS_DOWNLOADING, false);
+                editor.putBoolean(QuickstartPreferences.WAS_DOWNLOADING, false).apply();
 
                 editor.putBoolean(QuickstartPreferences.TRY_REREG, !QuickstartPreferences.isAndroid);
                 editor.apply();
@@ -350,6 +360,7 @@ public class BootupPage extends Activity{
                     e.printStackTrace();
                 }
             }else{
+                editor.putBoolean(QuickstartPreferences.WAS_DOWNLOADING, true).apply();
 
                 if(settings.getBoolean(PageScroll.NotifyMode,true)) {
 

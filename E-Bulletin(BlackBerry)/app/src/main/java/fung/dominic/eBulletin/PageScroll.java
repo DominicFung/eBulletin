@@ -235,7 +235,7 @@ public class PageScroll extends FragmentActivity implements Observer{
 
         Log.i("PageScroll", "OnPause called");
 
-        QuickstartPreferences.outOfScreen = true;
+        //QuickstartPreferences.outOfScreen = true;
     }
 
     OnClickListener buttonCheckUpdatesOnClickListener = new View.OnClickListener(){
