@@ -17,14 +17,14 @@
         <clip>
             <shape>
                 <stroke android:width="3dip"
-                    android:color="#610000"/>
+                    android:color="#262673"/>
                 <corners android:radius="5dip" />
                 <gradient
                     android:angle="0"
-                    android:centerColor="#ffab00"
+                    android:centerColor="#99ccff"
                     android:centerY="0.4"
-                    android:endColor="#ff0000"
-                    android:startColor="#ffE8B7" />
+                    android:endColor="#0099ff"
+                    android:startColor="#e5ccff" />
             </shape>
         </clip>
     </item>

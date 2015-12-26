@@ -21,7 +21,7 @@
         android:layout_height="170dp"
         android:id="@+id/MenuBase"
         android:clickable="false"
-        android:background="#ff00d845"
+        android:background="#3399ff"
         android:gravity="top">
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
