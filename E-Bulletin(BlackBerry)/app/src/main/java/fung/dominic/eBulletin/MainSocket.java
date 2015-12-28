@@ -520,16 +520,18 @@ public class MainSocket extends Fragment {
                         }
 
                         if (ToExternalStorage.isExternalStorageReadable()) {
-                            try {
-                                Intent i = new Intent(Intent.ACTION_VIEW);
+                            if (MainSocket.this.getActivity().hasWindowFocus()) { // seperated out because we dont want the toast to pop up
+                                try {
+                                    Intent i = new Intent(Intent.ACTION_VIEW);
 
-                                i.setDataAndType(uri, "application/pdf");
-                                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    i.setDataAndType(uri, "application/pdf");
+                                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                                startActivity(i);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                QuickstartPreferences.postingMsg(MainSocket.this, "No Application available to view pdf");
+                                    startActivity(i);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    QuickstartPreferences.postingMsg(MainSocket.this, "No Application available to view pdf");
+                                }
                             }
                         } else {
                             QuickstartPreferences.postingMsg(MainSocket.this, "Unable to read from external");

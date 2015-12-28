@@ -48,7 +48,6 @@ public class SundayDatePicker extends Fragment {
     TextView percentage;
     List<Integer> DayList;
     int LastSavedDay, LastSavedMonth, LastSavedYear;
-    static final String SUNPICK_DELAYER_ID = "SundayPick Delayer";
     private static final String FILENAME_ID = "SunPicFileName";
     final static String DAY_ID = "DAY";
     final static String MONTH_ID = "MONTH";
@@ -67,6 +66,10 @@ public class SundayDatePicker extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+
+        SharedPreferences settings = this.getActivity().getSharedPreferences(PageScroll.PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(QuickstartPreferences.WAS_DOWNLOADING, false).apply();
     }
 
     @Override
@@ -88,8 +91,6 @@ public class SundayDatePicker extends Fragment {
     public void onResume() {
         super.onResume();
 
-        PageScroll.SundayPickFrag = this;
-
         Log.i("SundayDatePicker", "onResume");
 
         SharedPreferences settings = this.getActivity().getSharedPreferences(PageScroll.PREFS_NAME, Context.MODE_PRIVATE);
@@ -101,8 +102,7 @@ public class SundayDatePicker extends Fragment {
             Retrieve.setEnabled(false);
         }
 
-        if (settings.getBoolean(QuickstartPreferences.WAS_DOWNLOADING, false)
-                && settings.getBoolean(SUNPICK_DELAYER_ID, false)){
+        if (settings.getBoolean(QuickstartPreferences.WAS_DOWNLOADING, false)){
 
             File as = new File(getActivity().getApplicationContext()
                     .getDir("archived_bulletin.pdf", Context.MODE_PRIVATE).getParent(), "archived_bulletin.pdf");
@@ -147,12 +147,7 @@ public class SundayDatePicker extends Fragment {
     public void onPause() {
         super.onPause();
 
-        PageScroll.SundayPickFrag = null;
-
-        SharedPreferences settings = SundayDatePicker.this.getActivity().getSharedPreferences(PageScroll.PREFS_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(SUNPICK_DELAYER_ID, true).apply();
-
+        Log.i("SundayDatePicker", "onPause");
     }
 
     @Override
@@ -170,12 +165,10 @@ public class SundayDatePicker extends Fragment {
         if (settings.getBoolean(QuickstartPreferences.WAS_DOWNLOADING, false)){
             progress.setVisibility(View.VISIBLE);
             percentage.setVisibility(View.VISIBLE);
-            if (settings.getBoolean(SUNPICK_DELAYER_ID, false)){
-                percentage.setTextColor(Color.parseColor("#ff0000"));
-                percentage.setTypeface(null, Typeface.BOLD);
-                percentage.setText("100%");
-                progress.setProgress(100);
-            }
+            percentage.setTextColor(Color.parseColor("#ff0000"));
+            percentage.setTypeface(null, Typeface.BOLD);
+            percentage.setText("100%");
+            progress.setProgress(100);
         }
 
         GregorianCalendar cal = new GregorianCalendar();
@@ -281,8 +274,6 @@ public class SundayDatePicker extends Fragment {
                 sock = new Socket();
                 sock.connect(new InetSocketAddress(MainSocket.IPaddress, MainSocket.PORT), 6000);
 
-                editor.putBoolean(QuickstartPreferences.WAS_DOWNLOADING, true);
-
                 InputStream inputStream = sock.getInputStream();
                 PrintWriter pw = new PrintWriter(sock.getOutputStream(),true);
 
@@ -334,16 +325,15 @@ public class SundayDatePicker extends Fragment {
                     outStream.flush();
                     outStream.close();
 
-                    if(!settings.getBoolean(SUNPICK_DELAYER_ID, false)) {
+                    Uri uri = ToExternalStorage.ToExternalStorage(as, retrieveFileName);
 
-                        Uri uri = ToExternalStorage.ToExternalStorage(as, retrieveFileName);
+                    if (bytesDownloaded != SaveTotalBytes) {
+                        QuickstartPreferences.postingMsg(SundayDatePicker.this, "file was corrupted, please try again");
+                    } else if (uri == null)
+                        QuickstartPreferences.postingMsg(SundayDatePicker.this, "Unable to update external");
 
-                        if (bytesDownloaded != SaveTotalBytes) {
-                            QuickstartPreferences.postingMsg(SundayDatePicker.this, "file was corrupted, please try again");
-                        } else if (uri == null)
-                            QuickstartPreferences.postingMsg(SundayDatePicker.this, "Unable to update external");
-
-                        else if (ToExternalStorage.isExternalStorageReadable()) {
+                    else if (ToExternalStorage.isExternalStorageReadable()) {
+                        if(SundayDatePicker.this.getActivity().hasWindowFocus()) {
                             try {
                                 Intent i = new Intent(Intent.ACTION_VIEW);
 
@@ -355,13 +345,9 @@ public class SundayDatePicker extends Fragment {
                                 e.printStackTrace();
                                 QuickstartPreferences.postingMsg(SundayDatePicker.this, "No Application available to view pdf");
                             }
-                        } else {
-                            QuickstartPreferences.postingMsg(SundayDatePicker.this, "Unable to read from external");
                         }
-                    }else{
-                        editor.putInt(QuickstartPreferences.BYTES_DOWNLOADED_ID, bytesDownloaded);
-                        editor.putInt(QuickstartPreferences.BYTES_TOTAL_ID, SaveTotalBytes);
-                        editor.apply();
+                    } else {
+                        QuickstartPreferences.postingMsg(SundayDatePicker.this, "Unable to read from external");
                     }
 
                 }else{
@@ -411,7 +397,7 @@ public class SundayDatePicker extends Fragment {
             SharedPreferences settings = SundayDatePicker.this.getActivity().getSharedPreferences(PageScroll.PREFS_NAME, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = settings.edit();
 
-            if(!settings.getBoolean(SUNPICK_DELAYER_ID, false)) {
+            if(SundayDatePicker.this.getActivity().hasWindowFocus()) {
                 editor.putBoolean(QuickstartPreferences.WAS_DOWNLOADING, false).apply();
                 customViewPager vp = (customViewPager) getActivity().findViewById(R.id.pager);
                 vp.setPSEnabled(true);
@@ -419,6 +405,8 @@ public class SundayDatePicker extends Fragment {
                 progress.setVisibility(View.GONE);
                 percentage.setVisibility(View.GONE);
             }else{
+
+                editor.putBoolean(QuickstartPreferences.WAS_DOWNLOADING,true).apply();
 
                 nm = (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 
