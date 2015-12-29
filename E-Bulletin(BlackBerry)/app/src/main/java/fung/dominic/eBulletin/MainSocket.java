@@ -3,9 +3,11 @@ package fung.dominic.eBulletin;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -14,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +47,7 @@ import fung.dominic.eBulletin.GCMconnection.QuickstartPreferences;
 
 public class MainSocket extends Fragment {
 
-    TextView textResponse, percentage;
+    TextView textResponse, percentage, StatusText;
     Button buttonConnect, buttonPref, buttonHelp, buttonOpenWith, buttonArchive;
     AlertDialog ShowAlert;
     public static final String IPaddress = "192.0.215.122";//192.168.2.107
@@ -68,6 +71,8 @@ public class MainSocket extends Fragment {
         SharedPreferences settings = this.getActivity().getSharedPreferences(PageScroll.PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(QuickstartPreferences.WAS_DOWNLOADING, false).apply();
+
+        LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(mMessageReceiver, new IntentFilter("UPDATE"));
     }
 
     @Override
@@ -93,6 +98,7 @@ public class MainSocket extends Fragment {
         buttonOpenWith = (Button)v.findViewById(R.id.openWith);
         buttonArchive = (Button)v.findViewById(R.id.ArchiveButton);
         percentage = (TextView)v.findViewById(R.id.ShowPercent);
+        StatusText = (TextView)v.findViewById(R.id.textView16);
 
         percentage.setVisibility(View.GONE);
         loadCircle.setVisibility(View.GONE);
@@ -125,10 +131,16 @@ public class MainSocket extends Fragment {
 
         boolean ServerOnline = settings.getBoolean(ServerStatusMode,true);
         if (ServerOnline){
-            setOnlineLook(this);
+            buttonConnect.setEnabled(true);
+            StatusText.setTextColor(Color.RED);
+            StatusText.setTypeface(null, Typeface.NORMAL);
+            StatusText.setText("Server: Online");
             Log.i("MainSocket","Online Look");
         }else {
-            setOfflineLook(this);
+            buttonConnect.setEnabled(false);
+            StatusText.setTextColor(Color.RED);
+            StatusText.setTypeface(null, Typeface.NORMAL);
+            StatusText.setText("Server: Offline");
             Log.i("MainSocket","Offline Look");
         }
     }
@@ -138,8 +150,6 @@ public class MainSocket extends Fragment {
         super.onResume();
 
         Log.i("MainSocket","onResume");
-
-        PageScroll.mainSockFrag = this;
 
         SharedPreferences settings = getActivity().getSharedPreferences(PageScroll.PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
@@ -237,40 +247,22 @@ public class MainSocket extends Fragment {
         Log.i("MainSocket", "onPause");
     }
 
-    public static void setOnlineLook(final Fragment f){
-        f.getActivity().runOnUiThread(new Runnable() {
+    public void setPendingLook(){
+        MainSocket.this.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Button buttonConnect = (Button) f.getActivity().findViewById(R.id.connect);
-                TextView StatusText = (TextView) f.getActivity().findViewById(R.id.textView16);
-
-                buttonConnect.setEnabled(true);
-                StatusText.setTextColor(Color.RED);
-                StatusText.setTypeface(null,Typeface.NORMAL);
-                StatusText.setText("Server: Online");
-            }
-        });
-    }
-
-    public static void setPendingLook(final Fragment f){
-        f.getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TextView StatusText = (TextView) f.getActivity().findViewById(R.id.textView16);
 
                 StatusText.setTextColor(Color.MAGENTA);
-                StatusText.setTypeface(null,Typeface.ITALIC);
+                StatusText.setTypeface(null, Typeface.ITALIC);
                 StatusText.setText("Pending...");
             }
         });
     }
 
-    public static void setOfflineLook(final Fragment f){
-        f.getActivity().runOnUiThread(new Runnable() {
+    public void setOfflineLook(){
+        MainSocket.this.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Button buttonConnect = (Button)f.getActivity().findViewById(R.id.connect);
-                TextView StatusText = (TextView)f.getActivity().findViewById(R.id.textView16);
 
                 buttonConnect.setEnabled(false);
                 StatusText.setTextColor(Color.RED);
@@ -556,23 +548,25 @@ public class MainSocket extends Fragment {
                 }
             } catch (IllegalArgumentException | UnknownHostException e) {
                 hasError = 1;
-                setOfflineLook(MainSocket.this);
-
-                if(PageScroll.SundayPickFrag != null)
-                    SundayDatePicker.setOfflineLook(PageScroll.SundayPickFrag);
 
                 editor.putBoolean(MainSocket.ServerStatusMode, false).apply();
+
+                Intent intentUPDATE = new Intent("UPDATE");
+                LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intentUPDATE);
+
+                setOfflineLook();
 
                 response = "UnknownHostException: " + e.toString();
 
             } catch (IOException e) {
                 hasError = 2;
-                setOfflineLook(MainSocket.this);
-
-                if(PageScroll.SundayPickFrag != null)
-                    SundayDatePicker.setOfflineLook(PageScroll.SundayPickFrag);
 
                 editor.putBoolean(MainSocket.ServerStatusMode, false).apply();
+
+                Intent intentUPDATE = new Intent("UPDATE");
+                LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intentUPDATE);
+
+                setOfflineLook();
 
                 response = "IOException: " + e.toString();
 
@@ -650,5 +644,39 @@ public class MainSocket extends Fragment {
                 nm.notify(QuickstartPreferences.uniqueID, n.build());
             }
         }
+    }
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            SharedPreferences settings = MainSocket.this.getActivity().getSharedPreferences(PageScroll.PREFS_NAME, Context.MODE_PRIVATE);
+            boolean status = settings.getBoolean(MainSocket.ServerStatusMode, true);
+
+            if (status) {
+                buttonConnect.setEnabled(true);
+                StatusText.setTextColor(Color.RED);
+                StatusText.setTypeface(null, Typeface.NORMAL);
+                StatusText.setText("Server: Online");
+            }
+            else {
+                buttonConnect.setEnabled(false);
+                StatusText.setTextColor(Color.RED);
+                StatusText.setTypeface(null, Typeface.NORMAL);
+                StatusText.setText("Server: Offline");
+            }
+
+            if (intent.getBooleanExtra("PENDING",false)){
+                StatusText.setTextColor(Color.MAGENTA);
+                StatusText.setTypeface(null, Typeface.ITALIC);
+                StatusText.setText("Pending...");
+            }
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+
+        LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(mMessageReceiver);
+        super.onDestroy();
     }
 }

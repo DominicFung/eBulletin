@@ -2,8 +2,10 @@ package fung.dominic.eBulletin;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -13,6 +15,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +73,8 @@ public class SundayDatePicker extends Fragment {
         SharedPreferences settings = this.getActivity().getSharedPreferences(PageScroll.PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(QuickstartPreferences.WAS_DOWNLOADING, false).apply();
+
+        LocalBroadcastManager.getInstance(SundayDatePicker.this.getActivity()).registerReceiver(mMessageReceiver, new IntentFilter("UPDATE"));
     }
 
     @Override
@@ -365,9 +370,8 @@ public class SundayDatePicker extends Fragment {
 
                 editor.putBoolean(MainSocket.ServerStatusMode, false).apply();
 
-                setOfflineLook(SundayDatePicker.this);
-                if(PageScroll.mainSockFrag != null)
-                    MainSocket.setOfflineLook(PageScroll.mainSockFrag);
+                Intent intentUPDATE = new Intent("UPDATE");
+                LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intentUPDATE);
 
                 QuickstartPreferences.postingMsg(SundayDatePicker.this, "Server is Offline");
             }
@@ -519,5 +523,19 @@ public class SundayDatePicker extends Fragment {
                 Retrieve.setEnabled(false);
             }
         });
+    }
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            SharedPreferences settings = SundayDatePicker.this.getActivity().getSharedPreferences(PageScroll.PREFS_NAME, Context.MODE_PRIVATE);
+            Retrieve.setEnabled(settings.getBoolean(MainSocket.ServerStatusMode,true));
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        LocalBroadcastManager.getInstance(SundayDatePicker.this.getActivity()).unregisterReceiver(mMessageReceiver);
+        super.onDestroy();
     }
 }
