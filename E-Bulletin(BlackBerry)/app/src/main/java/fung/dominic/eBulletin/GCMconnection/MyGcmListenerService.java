@@ -1,7 +1,9 @@
 package fung.dominic.eBulletin.GCMconnection;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -57,6 +59,11 @@ public class MyGcmListenerService extends GcmListenerService {
     private void sendNotification(String title, String message) {
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Intent intent = new Intent();
+        intent.setClass(this.getApplicationContext(),PageScroll.class);
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        PendingIntent pi = PendingIntent.getActivity(this.getApplicationContext(),0,intent,0);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_stat_ic_notification)
                 .setTicker(message)
@@ -64,7 +71,8 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setWhen(System.currentTimeMillis())
                 .setContentText(message)
                 .setAutoCancel(true)
-                .setSound(defaultSoundUri);
+                .setSound(defaultSoundUri)
+                .setContentIntent(pi);
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

@@ -21,7 +21,6 @@ import java.net.Socket;
 import fung.dominic.eBulletin.MainSocket;
 import fung.dominic.eBulletin.PageScroll;
 import fung.dominic.eBulletin.R;
-import fung.dominic.eBulletin.SundayDatePicker;
 
 public class RegistrationIntentService extends IntentService {
 
@@ -74,10 +73,6 @@ public class RegistrationIntentService extends IntentService {
         else{
             SharedPreferences.Editor editor = settings.edit();
 
-            if (PageScroll.mainSockFrag != null) {
-                MainSocket.setPendingLook(PageScroll.mainSockFrag);
-            }
-
             checkServer();
 
             editor.putString(RegIDTag,"BLACKBERRY_NULL_REGISTRATION");
@@ -92,9 +87,9 @@ public class RegistrationIntentService extends IntentService {
 
         try{
 
-            if (PageScroll.mainSockFrag != null){
-                MainSocket.setPendingLook(PageScroll.mainSockFrag);
-            }
+            Intent intentPEND = new Intent("UPDATE");
+            intentPEND.putExtra("PENDING", true);
+            LocalBroadcastManager.getInstance(RegistrationIntentService.this).sendBroadcast(intentPEND);
 
             sock = new Socket();
             sock.connect(new InetSocketAddress(MainSocket.IPaddress, MainSocket.PORT), 1000);
@@ -120,26 +115,16 @@ public class RegistrationIntentService extends IntentService {
             SharedPreferences.Editor editor = settings.edit();
             editor.putBoolean(MainSocket.ServerStatusMode, true).apply();
 
-            if (PageScroll.mainSockFrag != null) {
-                MainSocket.setOnlineLook(PageScroll.mainSockFrag);
-            }
-
-            if (PageScroll.SundayPickFrag != null){
-                SundayDatePicker.setOnlineLook(PageScroll.SundayPickFrag);
-            }
+            Intent intentUPDATE = new Intent("UPDATE");
+            LocalBroadcastManager.getInstance(RegistrationIntentService.this).sendBroadcast(intentUPDATE);
 
         }catch(IOException e){
 
             SharedPreferences.Editor editor = settings.edit();
             editor.putBoolean(MainSocket.ServerStatusMode, false).apply();
 
-            if (PageScroll.mainSockFrag != null) {
-                MainSocket.setOfflineLook(PageScroll.mainSockFrag);
-            }
-
-            if (PageScroll.SundayPickFrag != null){
-                SundayDatePicker.setOfflineLook(PageScroll.SundayPickFrag);
-            }
+            Intent intentUPDATE = new Intent("UPDATE");
+            LocalBroadcastManager.getInstance(RegistrationIntentService.this).sendBroadcast(intentUPDATE);
         }
 
     }

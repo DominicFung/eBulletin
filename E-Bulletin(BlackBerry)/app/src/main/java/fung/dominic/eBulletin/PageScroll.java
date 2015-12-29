@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.util.SparseArray;
@@ -65,9 +66,6 @@ public class PageScroll extends FragmentActivity implements Observer{
     public static final String ReaderMode = "ReaderMode";
     public static final String NotifyMode = "NotifyMode";
     public static BroadcastObserver bco;
-
-    public static Fragment mainSockFrag;
-    public static Fragment SundayPickFrag;
 
     public static String RegID = null;
 
@@ -166,7 +164,8 @@ public class PageScroll extends FragmentActivity implements Observer{
 
         viewPager = ((customViewPager) findViewById(R.id.pager));
         FragmentManager fragmentManager = getSupportFragmentManager();
-        viewPager.setAdapter(new MyAdapter(fragmentManager));
+        MyAdapter myAdapter = new MyAdapter(fragmentManager);
+        viewPager.setAdapter(myAdapter);
 
         mLayout = (SlidingUpPanelLayout)findViewById(R.id.sliding_layout);
         mLayout.setCoveredFadeColor(Color.TRANSPARENT);
@@ -218,11 +217,6 @@ public class PageScroll extends FragmentActivity implements Observer{
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         Log.i("PageScroll","OnResume called");
 
-        if (!QuickstartPreferences.isAndroid){
-            ConnectServer ServerCheck = new ConnectServer();
-            ServerCheck.execute();
-        }
-
         if (("".equals(settings.getString(RegistrationIntentService.RegIDTag,"")) || settings.getBoolean(QuickstartPreferences.TRY_REREG,false))){
 
             SharedPreferences.Editor editor = settings.edit();
@@ -245,9 +239,6 @@ public class PageScroll extends FragmentActivity implements Observer{
         @Override
         public void onClick(View arg0) {
 
-            if(mainSockFrag != null)
-                MainSocket.setPendingLook(mainSockFrag);
-
             updateCircle.setVisibility(View.VISIBLE);
 
             ConnectServer ServerCheck = new ConnectServer();
@@ -259,18 +250,8 @@ public class PageScroll extends FragmentActivity implements Observer{
     public void update(Observable observable, Object data) {
         Log.i("PageScroll", "Update Triggered");
 
-        MyAdapter adapter = (MyAdapter) viewPager.getAdapter();
-        Fragment MainSockFragment = adapter.getRegisteredFragment(0);
-
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-
-        if (MainSockFragment != null && settings.getBoolean(MainSocket.ServerStatusMode, false)) {
-            Log.i("PageScroll","Online look set");
-            MainSocket.setOnlineLook(MainSockFragment);
-        }else if (MainSockFragment != null && !settings.getBoolean(MainSocket.ServerStatusMode, false)){
-            Log.i("PageScroll","Offline look set");
-            MainSocket.setOfflineLook(MainSockFragment);
-        }
+        Intent intent = new Intent("UPDATE");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     public class ConnectServer extends AsyncTask<Void, Void, Void> {
@@ -328,15 +309,8 @@ public class PageScroll extends FragmentActivity implements Observer{
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putBoolean(MainSocket.ServerStatusMode, true).apply();
 
-
-                if (mainSockFrag != null) {
-                    Log.i("PageScroll","Setting Online look");
-                    MainSocket.setOnlineLook(mainSockFrag);
-                }
-
-                if(SundayPickFrag != null){
-                    SundayDatePicker.setOnlineLook(SundayPickFrag);
-                }
+                Intent intentUPDATE = new Intent("UPDATE");
+                LocalBroadcastManager.getInstance(PageScroll.this).sendBroadcast(intentUPDATE);
 
                 if ("".equals(settings.getString(RegistrationIntentService.RegIDTag, ""))){
                     Intent intent = new Intent(PageScroll.this, RegistrationIntentService.class);
@@ -351,13 +325,8 @@ public class PageScroll extends FragmentActivity implements Observer{
                     editor.putBoolean(MainSocket.ServerStatusMode, false).apply();
                 }
 
-                if (mainSockFrag != null) {
-                    MainSocket.setOfflineLook(mainSockFrag);
-                }
-
-                if(SundayPickFrag != null){
-                    SundayDatePicker.setOfflineLook(SundayPickFrag);
-                }
+                Intent intentUPDATE = new Intent("UPDATE");
+                LocalBroadcastManager.getInstance(PageScroll.this).sendBroadcast(intentUPDATE);
             }
 
             return null;
@@ -403,12 +372,6 @@ public class PageScroll extends FragmentActivity implements Observer{
             registeredFragments.remove(position);
             super.destroyItem(container, position, object);
         }
-
-        public Fragment getRegisteredFragment(int position){
-            return registeredFragments.get(position);
-        }
-
-
     }
 
     @Override
@@ -442,4 +405,6 @@ public class PageScroll extends FragmentActivity implements Observer{
 
         editor.commit();
     }
+
+
 }
