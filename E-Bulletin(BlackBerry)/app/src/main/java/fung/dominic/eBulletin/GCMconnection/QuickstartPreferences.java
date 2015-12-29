@@ -16,6 +16,7 @@ public class QuickstartPreferences {
 
 
     public static final boolean isAndroid = true;
+    public static boolean ProgressShow = false;
 
 
     public static void postingMsg(final Fragment f, final String message){

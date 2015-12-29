@@ -154,6 +154,12 @@ public class MainSocket extends Fragment {
         SharedPreferences settings = getActivity().getSharedPreferences(PageScroll.PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
 
+        if(QuickstartPreferences.ProgressShow){
+            percentage.setVisibility(View.VISIBLE);
+            loadCircle.setVisibility(View.VISIBLE);
+            buttonConnect.setEnabled(true);
+        }
+
         if(settings.getBoolean(QuickstartPreferences.WAS_DOWNLOADING, false)){
 
             UnknownHost = new AlertDialog.Builder(MainSocket.this.getActivity());
@@ -237,6 +243,7 @@ public class MainSocket extends Fragment {
                 buttonOpenWith.setEnabled(isOpenable);
                 percentage.setVisibility(View.GONE);
                 loadCircle.setVisibility(View.GONE);
+                QuickstartPreferences.ProgressShow = false;
             }
         }
     }
@@ -390,6 +397,7 @@ public class MainSocket extends Fragment {
                 percentage.setTextColor(Color.parseColor("#0000FF"));
                 percentage.setText("0%");
                 percentage.setVisibility(View.VISIBLE);
+                QuickstartPreferences.ProgressShow = true;
 
 
                 UnknownHost = new AlertDialog.Builder(MainSocket.this.getActivity());
@@ -467,9 +475,8 @@ public class MainSocket extends Fragment {
 
                 Log.i("MainSocket", "Date of file: " + SaveDate);
 
-                editor.putString(QuickstartPreferences.CURRENT_PDF_DATE,SaveDate);
+                editor.putString(QuickstartPreferences.CURRENT_PDF_DATE, SaveDate);
                 editor.apply();
-
 
                 ByteArrayOutputStream byteArrayOutputStream =
                         new ByteArrayOutputStream(1024);
@@ -584,6 +591,7 @@ public class MainSocket extends Fragment {
 
         @Override
         protected void onProgressUpdate(Integer... values) {
+
             if ((values[0]%10)==0){
                 percentage.setTextSize(40);
                 percentage.setTextColor(Color.parseColor("#0000FF"));
@@ -610,6 +618,7 @@ public class MainSocket extends Fragment {
                 buttonOpenWith.setEnabled(isOpenable);
                 percentage.setVisibility(View.GONE);
                 loadCircle.setVisibility(View.GONE);
+                QuickstartPreferences.ProgressShow = false;
 
                 if (hasError == 1) {
                     ShowAlert = UnknownHost.create();

@@ -107,6 +107,12 @@ public class SundayDatePicker extends Fragment {
             Retrieve.setEnabled(false);
         }
 
+        if(QuickstartPreferences.ProgressShow){
+            percentage.setVisibility(View.VISIBLE);
+            progress.setVisibility(View.VISIBLE);
+            Retrieve.setEnabled(true);
+        }
+
         if (settings.getBoolean(QuickstartPreferences.WAS_DOWNLOADING, false)){
 
             File as = new File(getActivity().getApplicationContext()
@@ -145,6 +151,7 @@ public class SundayDatePicker extends Fragment {
 
             progress.setVisibility(View.GONE);
             percentage.setVisibility(View.GONE);
+            QuickstartPreferences.ProgressShow = false;
         }
     }
 
@@ -252,6 +259,7 @@ public class SundayDatePicker extends Fragment {
                     percentage.setText("0%");
                     percentage.setVisibility(View.VISIBLE);
 
+                    QuickstartPreferences.ProgressShow = true;
                     vp.setPSEnabled(false);
 
                     ConnectServer getOldFile = new ConnectServer(retrieveFileName);
@@ -408,6 +416,7 @@ public class SundayDatePicker extends Fragment {
 
                 progress.setVisibility(View.GONE);
                 percentage.setVisibility(View.GONE);
+                QuickstartPreferences.ProgressShow = false;
             }else{
 
                 editor.putBoolean(QuickstartPreferences.WAS_DOWNLOADING,true).apply();
@@ -501,28 +510,6 @@ public class SundayDatePicker extends Fragment {
         editor.putInt(YEAR_ID, pickYear.getValue());
         editor.apply();
 
-    }
-
-    public static void setOnlineLook(final Fragment f){
-        f.getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Button Retrieve = (Button)f.getActivity().findViewById(R.id.buttonRetrieve);
-
-                Retrieve.setEnabled(true);
-            }
-        });
-    }
-
-    public static void setOfflineLook(final Fragment f){
-        f.getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Button Retrieve = (Button)f.getActivity().findViewById(R.id.buttonRetrieve);
-
-                Retrieve.setEnabled(false);
-            }
-        });
     }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
