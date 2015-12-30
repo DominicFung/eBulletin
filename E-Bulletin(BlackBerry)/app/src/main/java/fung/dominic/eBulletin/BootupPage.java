@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -50,6 +51,9 @@ public class BootupPage extends Activity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.i("BootupPage", "onCreate");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bootup_page);
 
@@ -75,6 +79,17 @@ public class BootupPage extends Activity{
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0){
+            this.moveTaskToBack(true);
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
 
@@ -85,7 +100,7 @@ public class BootupPage extends Activity{
         editor.apply();
 
         if (QuickstartPreferences.isAndroid) {  // use checkPlayServices() on android devices
-                                                // registration happens in resume of PageScroll
+            // registration happens in resume of PageScroll
             if (checkPlayServices()) {
 
                 Log.i("BootupPage", "in onStart");
@@ -94,6 +109,7 @@ public class BootupPage extends Activity{
                 if (AutoConnect) {
 
                     ConnectServer OnlineServer = new ConnectServer(MainSocket.IPaddress, MainSocket.PORT);
+                    //QuickstartPreferences.ProgressShow = true;
                     OnlineServer.execute();
 
                 } else {
@@ -103,13 +119,14 @@ public class BootupPage extends Activity{
 
                 }
             }
-        }else{
+        } else {
             Log.i("BootupPage", "in onStart");
 
             boolean AutoConnect = settings.getBoolean(PageScroll.AutoConnectMode, false);
             if (AutoConnect) {
 
                 ConnectServer OnlineServer = new ConnectServer(MainSocket.IPaddress, MainSocket.PORT);
+                //QuickstartPreferences.ProgressShow = true;
                 OnlineServer.execute();
 
             } else {
@@ -148,6 +165,8 @@ public class BootupPage extends Activity{
                     Log.i("BootupPage", "SKIP_SOCKET is put");
                     i.putExtra("SKIP_SOCKET", as.getAbsolutePath());
                 }
+
+                //QuickstartPreferences.ProgressShow = false;
 
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
@@ -357,6 +376,8 @@ public class BootupPage extends Activity{
                         Log.i("BootupPage", "SKIP_SOCKET is put");
                         i.putExtra("SKIP_SOCKET", as.getAbsolutePath());
                     }
+
+                    //QuickstartPreferences.ProgressShow = false;
 
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(i);

@@ -217,14 +217,17 @@ public class PageScroll extends FragmentActivity implements Observer{
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         Log.i("PageScroll","OnResume called");
 
-        if (("".equals(settings.getString(RegistrationIntentService.RegIDTag,"")) || settings.getBoolean(QuickstartPreferences.TRY_REREG,false))){
+        if(!QuickstartPreferences.ProgressShow) {
 
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putBoolean(QuickstartPreferences.TRY_REREG, !QuickstartPreferences.isAndroid);
-            editor.apply();
+            if (("".equals(settings.getString(RegistrationIntentService.RegIDTag, "")) || settings.getBoolean(QuickstartPreferences.TRY_REREG, false))) {
 
-            Intent intent = new Intent(this, RegistrationIntentService.class);
-            startService(intent);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean(QuickstartPreferences.TRY_REREG, !QuickstartPreferences.isAndroid);
+                editor.apply();
+
+                Intent intent = new Intent(this, RegistrationIntentService.class);
+                startService(intent);
+            }
         }
     }
 
@@ -363,7 +366,7 @@ public class PageScroll extends FragmentActivity implements Observer{
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             Fragment fragment = (Fragment)super.instantiateItem(container, position);
-            registeredFragments.put(position,fragment);
+            registeredFragments.put(position, fragment);
             return fragment;
         }
 
@@ -376,10 +379,11 @@ public class PageScroll extends FragmentActivity implements Observer{
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event){
-        if(keyCode == KeyEvent.KEYCODE_BACK){
+        if(keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0){
             if (mLayout != null &&
                     (mLayout.getPanelState() == PanelState.EXPANDED || mLayout.getPanelState() == PanelState.ANCHORED)) {
                 mLayout.setPanelState(PanelState.COLLAPSED);
+                return true;
             } else {
                 moveTaskToBack(true);
                 return true;

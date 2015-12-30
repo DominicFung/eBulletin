@@ -15,7 +15,7 @@ public class QuickstartPreferences {
     public static final int uniqueID = 45523;
 
 
-    public static final boolean isAndroid = true;
+    public static final boolean isAndroid = false;
     public static boolean ProgressShow = false;
 
 
