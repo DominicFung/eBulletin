@@ -47,6 +47,7 @@ public class BootupPage extends Activity{
     public static boolean fromBootup = true;
     NotificationManager nm;
     int ShownPercentage;
+    boolean toMainAfterWait = false;
 
 
     @Override
@@ -109,12 +110,12 @@ public class BootupPage extends Activity{
                 if (AutoConnect) {
 
                     ConnectServer OnlineServer = new ConnectServer(MainSocket.IPaddress, MainSocket.PORT);
-                    //QuickstartPreferences.ProgressShow = true;
                     OnlineServer.execute();
 
                 } else {
 
                     waitTime ToMainPage = new waitTime();
+                    toMainAfterWait = true;
                     ToMainPage.execute();
 
                 }
@@ -126,12 +127,12 @@ public class BootupPage extends Activity{
             if (AutoConnect) {
 
                 ConnectServer OnlineServer = new ConnectServer(MainSocket.IPaddress, MainSocket.PORT);
-                //QuickstartPreferences.ProgressShow = true;
                 OnlineServer.execute();
 
             } else {
 
                 waitTime ToMainPage = new waitTime();
+                toMainAfterWait = true;
                 ToMainPage.execute();
 
             }
@@ -145,6 +146,11 @@ public class BootupPage extends Activity{
         Log.i("BootupPage", "OnResume Called");
 
         SharedPreferences settings = getSharedPreferences(PageScroll.PREFS_NAME, MODE_PRIVATE);
+
+        if(toMainAfterWait){
+            waitTime ToMainPage = new waitTime();
+            ToMainPage.execute();
+        }
 
         if(settings.getBoolean(QuickstartPreferences.WAS_DOWNLOADING, false)) {
 
@@ -165,8 +171,6 @@ public class BootupPage extends Activity{
                     Log.i("BootupPage", "SKIP_SOCKET is put");
                     i.putExtra("SKIP_SOCKET", as.getAbsolutePath());
                 }
-
-                //QuickstartPreferences.ProgressShow = false;
 
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
@@ -216,9 +220,11 @@ public class BootupPage extends Activity{
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            Intent i = new Intent(BootupPage.this, PageScroll.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(i);
+            if(hasWindowFocus()) {
+                Intent i = new Intent(BootupPage.this, PageScroll.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+            }
         }
     }
 
@@ -376,8 +382,6 @@ public class BootupPage extends Activity{
                         Log.i("BootupPage", "SKIP_SOCKET is put");
                         i.putExtra("SKIP_SOCKET", as.getAbsolutePath());
                     }
-
-                    //QuickstartPreferences.ProgressShow = false;
 
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(i);
