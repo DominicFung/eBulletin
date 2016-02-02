@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">eBulletin</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="gcm_send_message">gcm_send_message</string>
-    <string name="token_error_message">token_error_message</string>
-</resources>
