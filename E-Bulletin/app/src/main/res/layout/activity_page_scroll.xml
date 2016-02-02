@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sliding_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    sothree:umanoPanelHeight="30dp"
+    sothree:umanoShadowHeight="0dp">
+
+    <fung.dominic.eBulletin.customViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="match_parent"
+        android:id="@+id/pager"
+        android:layout_width="match_parent">
+
+    </fung.dominic.eBulletin.customViewPager>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:id="@+id/MenuBase"
+        android:clickable="false"
+        android:background="#3399ff"
+        android:gravity="top">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:padding="16dp"
+            android:id="@+id/MenuOntop"
+            android:clickable="false"
+            android:background="#ffffffff"
+            android:layout_alignParentBottom="true">
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/switch1"
+                android:textOn="On"
+                android:textOff="Off"
+                android:enabled="true"
+                android:checked="true"
+                android:focusable="false"
+                android:clickable="true"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:layout_above="@+id/button"
+                android:layout_alignLeft="@+id/textView29"
+                android:layout_alignStart="@+id/textView29" />
+
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Open on Startup"
+                android:id="@+id/checkBox2"
+                android:paddingLeft="2dp"
+                android:paddingRight="16dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Use External Reader"
+                android:id="@+id/checkBox3"
+                android:layout_below="@+id/checkBox2"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:checked="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Check for Updates"
+                android:id="@+id/button"
+                android:layout_below="@+id/checkBox3"
+                android:layout_centerHorizontal="true"
+                android:singleLine="true"
+                android:background="@null"
+                android:textColor="@color/colour_state" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Notifications"
+                android:id="@+id/textView29"
+                android:layout_above="@+id/switch1"
+                android:layout_toRightOf="@+id/checkBox3"
+                android:layout_toEndOf="@+id/checkBox3"
+                android:layout_marginLeft="31dp"
+                android:layout_marginStart="31dp"
+                android:textColor="#ff000000"
+                android:textSize="20dp" />
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar3"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/imageView"
+            android:src="@drawable/menu_up_arrow"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

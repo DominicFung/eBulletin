@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="650dp"
+    android:id="@+id/scrollView"
+    android:fillViewport="false">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="650dp"
+        android:padding="16dp"
+        android:id="@+id/RLayout2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="We are currently on a Beta version of this app:"
+            android:id="@+id/textView8"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/CreatorTxt"
+            android:layout_alignStart="@+id/CreatorTxt"
+            android:layout_marginTop="56dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Version:"
+            android:id="@+id/textView9"
+            android:layout_marginTop="25dp"
+            android:layout_below="@+id/textView8"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/textView10"
+            android:layout_marginTop="33dp"
+            android:text="- Button name changes to make the app more intuitive"
+            android:layout_below="@+id/textView9"
+            android:layout_alignLeft="@+id/textView8"
+            android:layout_alignStart="@+id/textView8" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Created by Dominic Fung"
+            android:id="@+id/CreatorTxt"
+            android:layout_marginTop="40dp"
+            android:layout_below="@+id/textView22"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="- New preference tab added"
+            android:id="@+id/textView11"
+            android:layout_below="@+id/textView10"
+            android:layout_alignLeft="@+id/textView10"
+            android:layout_alignStart="@+id/textView10" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="- Third party PDF apps can now be used on start up (Controlled by preference tab)"
+            android:id="@+id/textView12"
+            android:layout_below="@+id/textView21"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="3.0"
+            android:id="@+id/textView13"
+            android:phoneNumber="true"
+            android:textColor="#7f00ff"
+            android:textSize="30dp"
+            android:layout_alignTop="@+id/textView9"
+            android:layout_toRightOf="@+id/CreatorTxt"
+            android:layout_toEndOf="@+id/CreatorTxt"
+            android:layout_marginTop="-4dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:id="@+id/Back"
+            android:layout_below="@+id/CreatorTxt"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="54dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="* Internal PDF viewer is still faulty: please use third party PDF viewers"
+            android:id="@+id/textView14"
+            android:layout_below="@+id/textView12"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="32dp"
+            android:textColor="#ffff0000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="- Notifications (integration of Google Cloud Messaging) added"
+            android:id="@+id/textView19"
+            android:layout_below="@+id/textView11"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="- Archives page and functionality added"
+            android:id="@+id/textView20"
+            android:layout_below="@+id/textView19"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="- New communications protocol implemented"
+            android:id="@+id/textView21"
+            android:layout_below="@+id/textView20"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="* File may become corrupt upon transfer, reattempt the transfer (a fix will be on the way!)"
+            android:id="@+id/textView22"
+            android:textColor="#ffff0000"
+            android:layout_marginTop="14dp"
+            android:layout_below="@+id/textView14"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
+</ScrollView>
