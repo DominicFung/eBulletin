@@ -1,59 +1,43 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="900dp"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent">
 
     <RelativeLayout
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-        android:layout_height="900dp" android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:layout_height="700dp" android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
         tools:context="fung.dominic.mcacbulletin_v1.Help"
-        android:id="@+id/RLayout3">
+        android:id="@+id/RLayout3"
+        android:theme="@style/AppTheme.Page">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Help!"
-            android:id="@+id/textView"
+            android:text="Connection"
+            android:id="@+id/connectionTitle"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginTop="10dp" />
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Version"
-            android:id="@+id/version"
-            android:singleLine="true"
-            android:background="@null"
-            android:layout_alignTop="@+id/Back"
-            android:layout_alignParentRight="true"
-            android:textColor="#ff0000ff" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text=" Wifi SSID:"
-            android:id="@+id/textView2"
-            android:layout_marginTop="29dp"
-            android:layout_below="@+id/textView3"
-            android:layout_alignRight="@+id/textView4"
-            android:layout_alignEnd="@+id/textView4"
-            android:textColor="#ff000000" />
+        <View
+            android:id="@+id/connectionDivider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/connectionTitle"
+            android:background="@color/blue800" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Ensure that you are connected to the internet through your data plan or a wireless fidelity. If you are currently in the MCAC building you may connect to our LAN:"
-            android:id="@+id/textView3"
-            android:layout_marginTop="34dp"
-            android:layout_below="@+id/textView"
+            android:text="@string/connectionText1"
+            android:id="@+id/connectionText1"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/connectionDivider"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
@@ -61,26 +45,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Password:"
-            android:id="@+id/textView4"
+            android:text="@string/wifiTag"
+            android:id="@+id/wifiTag"
             android:layout_marginTop="15dp"
-            android:layout_below="@+id/textView2"
+            android:layout_below="@+id/connectionText1"
+            android:layout_alignLeft="@+id/passwordTag"
+            android:layout_alignStart="@+id/passwordTag"
+            android:textColor="@color/blue900" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/passwordTag"
+            android:id="@+id/passwordTag"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/wifiTag"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:textColor="#ff000000" />
+            android:textColor="@color/blue900" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="* There is currently no LAN set up in version 3.0 stay tuned!"
-            android:id="@+id/textView5"
-            android:textColor="#00cc99"
-            android:layout_alignTop="@+id/textView2"
+            android:text="@string/textView5"
+            android:id="@+id/wifiTempMsg"
+            android:textColor="#00b11a"
+            android:layout_alignTop="@+id/wifiTag"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_toRightOf="@+id/textView4"
-            android:layout_toEndOf="@+id/textView4"
+            android:layout_toRightOf="@+id/passwordTag"
+            android:layout_toEndOf="@+id/passwordTag"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp" />
 
@@ -88,133 +83,121 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/contactInfo"
-            android:text="If problems persist, the server maybe down, please contact Dominic Fung: fung_dominic@hotmail.com"
-            android:layout_below="@+id/textView7"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="29dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="If you have questions, comments or feedback, let me know!"
-            android:id="@+id/textView6"
-            android:layout_below="@+id/contactInfo"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="25dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Note: This Wifi will disconnect once download is complete!"
-            android:id="@+id/textView7"
-            android:layout_below="@+id/textView4"
-            android:layout_alignLeft="@+id/contactInfo"
-            android:layout_alignStart="@+id/contactInfo"
+            android:id="@+id/wifiWarn"
+            android:layout_below="@+id/passwordTag"
             android:textColor="#ffff0000"
             android:layout_marginLeft="20dp"
-            android:textSize="10dp" />
+            android:textSize="10sp" />
 
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Back"
-            android:id="@+id/Back"
-            android:layout_marginTop="54dp"
-            android:singleLine="true"
-            android:background="@null"
-            android:layout_below="@+id/textView26"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/connectionText2"
+            android:text="@string/connectionText2"
+            android:layout_below="@+id/wifiWarn"
+            android:layout_marginTop="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/connectionText3"
+            android:id="@+id/connectionText3"
+            android:layout_below="@+id/connectionText2"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignRight="@+id/textView"
-            android:layout_alignEnd="@+id/textView"
-            android:textColor="#ff0000ff" />
+            android:layout_marginTop="15dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Troubleshoot"
-            android:id="@+id/textView15"
-            android:textColor="#ff000000"
-            android:layout_marginTop="114dp"
-            android:layout_below="@+id/textView6"
-            android:layout_centerHorizontal="true" />
+            android:id="@+id/troubleTitle"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/connectionText3" />
+        <View
+            android:id="@+id/troubleDivider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/troubleTitle"
+            android:background="@color/blue800" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Corrupt File/Could not Open: "
-            android:id="@+id/textView23"
-            android:layout_below="@+id/textView15"
+            android:text="@string/troubleFaq1"
+            android:id="@+id/troubleFaq1"
+            android:layout_below="@+id/troubleDivider"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginTop="22dp"
-            android:textColor="#ff000000"
+            android:textColor="@color/blue900"
             android:textStyle="italic" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="The file may not have downloaded properly. Try downloading again. If problem persist contact Dominic Fung. You can find his information in the &apos;Versions&apos; page"
-            android:id="@+id/textView24"
-            android:layout_below="@+id/textView23"
-            android:layout_alignLeft="@+id/textView7"
-            android:layout_alignStart="@+id/textView7" />
+            android:text="@string/troubleAns1"
+            android:id="@+id/troubleAns1"
+            android:layout_below="@+id/troubleFaq1"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Get Bulletin is unclickable .."
-            android:id="@+id/textView25"
-            android:textColor="#ff000000"
+            android:text="@string/troubleFaq2"
+            android:id="@+id/troubleFaq2"
+            android:textColor="@color/blue900"
             android:textStyle="italic"
-            android:layout_marginTop="36dp"
-            android:layout_below="@+id/textView27"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Use the &quot;Check for Updates&quot; button in the preference tab to check if the server is online. This button will only appear if that is the case. Email Dominic if problems persist"
-            android:id="@+id/textView26"
-            android:layout_below="@+id/textView25"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignLeft="@+id/textView24"
-            android:layout_alignStart="@+id/textView24" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="This is a critical problem. Let Me Know if this happens"
-            android:id="@+id/textView27"
-            android:layout_below="@+id/textView28"
-            android:layout_alignLeft="@+id/textView24"
-            android:layout_alignStart="@+id/textView24" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="App Stays in the Splash Screen .."
-            android:id="@+id/textView28"
-            android:textColor="#ff000000"
-            android:textStyle="italic"
-            android:layout_below="@+id/textView24"
+            android:layout_below="@+id/troubleAns1"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="30dp" />
+            android:layout_marginTop="15dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/troubleAns2"
+            android:id="@+id/troubleAns2"
+            android:layout_below="@+id/troubleFaq2"
+            android:layout_alignLeft="@+id/troubleAns1"
+            android:layout_alignStart="@+id/troubleAns1"
+            android:layout_marginRight="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/troubleFaq3"
+            android:id="@+id/troubleFaq3"
+            android:textColor="@color/blue900"
+            android:textStyle="italic"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/troubleAns2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/troubleAns3"
+            android:id="@+id/troubleAns3"
+            android:layout_below="@+id/troubleFaq3"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignLeft="@+id/troubleAns1"
+            android:layout_alignStart="@+id/troubleAns1"
+            android:layout_marginRight="15dp"/>
+
+
+
+
 
     </RelativeLayout>
 </ScrollView>

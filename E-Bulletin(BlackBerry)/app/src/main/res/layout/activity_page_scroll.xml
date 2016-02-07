@@ -7,101 +7,92 @@
     android:gravity="bottom"
     sothree:umanoPanelHeight="30dp"
     sothree:umanoShadowHeight="0dp">
-
-    <fung.dominic.eBulletin.customViewPager
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_height="match_parent"
-        android:id="@+id/pager"
-        android:layout_width="match_parent">
-
-    </fung.dominic.eBulletin.customViewPager>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/component_toolbar"/>
+        <include layout="@layout/component_tabstrip"/>
+        <fung.dominic.eBulletin.customViewPager
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_height="match_parent"
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/tabStrip">
+        </fung.dominic.eBulletin.customViewPager>
+    </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="170dp"
+        android:layout_height="140dp"
         android:id="@+id/MenuBase"
         android:clickable="false"
-        android:background="#3399ff"
-        android:gravity="top">
+        android:background="@color/blue800"
+        android:gravity="top"
+        >
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="vertical" android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="110dp"
             android:padding="16dp"
             android:id="@+id/MenuOntop"
             android:clickable="false"
-            android:background="#ffffffff"
-            android:layout_alignParentBottom="true">
+            android:background="@color/blue100"
+            android:layout_alignParentBottom="true"
+            >
 
-            <Switch
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/switch1"
-                android:textOn="On"
-                android:textOff="Off"
-                android:enabled="true"
-                android:checked="true"
-                android:focusable="false"
-                android:clickable="true"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
-                android:layout_above="@+id/button"
-                android:layout_alignLeft="@+id/textView29"
-                android:layout_alignStart="@+id/textView29" />
-
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Open on Startup"
-                android:id="@+id/checkBox2"
-                android:paddingLeft="2dp"
-                android:paddingRight="16dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Use External Reader"
-                android:id="@+id/checkBox3"
-                android:layout_below="@+id/checkBox2"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:checked="true" />
-
+                android:id="@+id/serverContainer"
+                android:orientation="horizontal"
+                android:layout_centerHorizontal="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Server Status:"
+                    android:textColor="@color/primGrey"
+                    android:textSize="17sp"
+                    android:textStyle="bold">
+                </TextView>
+                <ImageView
+                    android:id="@+id/serverStateImg"
+                    android:layout_width="15dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/on_circle"
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:id="@+id/serverStateMsg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Online"
+                    android:textColor="@color/primGrey"
+                    android:textSize="17sp">
+                </TextView>
+            </LinearLayout>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Check for Updates"
                 android:id="@+id/button"
-                android:layout_below="@+id/checkBox3"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/serverContainer"
+                android:singleLine="false"
+                android:textColor="#fff"
                 android:layout_centerHorizontal="true"
-                android:singleLine="true"
-                android:background="@null"
-                android:textColor="@color/colour_state" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Notifications"
-                android:id="@+id/textView29"
-                android:layout_above="@+id/switch1"
-                android:layout_toRightOf="@+id/checkBox3"
-                android:layout_toEndOf="@+id/checkBox3"
-                android:layout_marginLeft="31dp"
-                android:layout_marginStart="31dp"
-                android:textColor="#ff000000"
-                android:textSize="20dp" />
+                android:backgroundTint="@color/blue500"/>
 
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/progressBar3"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@+id/button"
+                android:layout_alignTop="@+id/button"/>
 
         </RelativeLayout>
 
@@ -109,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:id="@+id/imageView"
-            android:src="@drawable/menu_up_arrow"
+            android:src="@drawable/menu_up_arrow_white"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 

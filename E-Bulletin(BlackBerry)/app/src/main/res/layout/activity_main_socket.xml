@@ -10,42 +10,115 @@
     android:weightSum="1"
     android:id="@+id/RLayout1">
 
-    <Button
+    <LinearLayout
         android:id="@+id/connect"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Get Bulletin!"
-        android:layout_marginTop="30dp" />
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:background="@drawable/lightbuttonshape">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Preference"
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="5dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/download_96" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:text="Get Latest Bulletin"
+            android:textColor="#fff"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/center_point"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true"/>
+    <LinearLayout
         android:id="@+id/pref"
-        android:layout_gravity="center_horizontal"
-        android:layout_below="@+id/connect"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/response"
-        android:layout_toLeftOf="@+id/response" />
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginRight="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/connect"
+        android:padding="10dp"
+        android:background="@drawable/lightbuttonshape"
+        android:layout_alignRight="@+id/center_point">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Open saved"
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="5dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/settings_96" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:text="Preferences"
+            android:textColor="#fff"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/openWith"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/response"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginLeft="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/connect"
-        android:layout_toRightOf="@+id/response"
-        android:singleLine="false" />
+        android:padding="10dp"
+        android:background="@drawable/lightbuttonshape"
+        android:layout_alignLeft="@+id/center_point"
+        >
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="5dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/view_file_96" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:text="View Saved"
+            android:textColor="#fff"/>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/response"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="   "
+        android:text="Welcome to the MCAC Bulletin App"
+        android:layout_marginTop="15dp"
         android:layout_below="@+id/pref"
         android:layout_centerHorizontal="true" />
 
@@ -56,27 +129,19 @@
         android:indeterminate="false"
         android:id="@+id/Loading"
         android:layout_gravity="center_horizontal"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:progressDrawable="@drawable/progressbar"/>
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Help!"
-        android:id="@+id/Help"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:singleLine="true"
-        android:textColor="#ff0000ff"
-        android:textSize="13sp"
-        android:background="@null"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="-9dp" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/ShowPercent"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
-    <TextView
+<!--    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -85,27 +150,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="false"
         android:textColor="#ffff0000"
-        android:layout_alignParentBottom="true" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Archive"
-        android:id="@+id/ArchiveButton"
-        android:background="@null"
-        android:singleLine="true"
-        android:layout_alignBottom="@+id/Help"
-        android:layout_toLeftOf="@+id/Help"
-        android:layout_toStartOf="@+id/Help"
-        android:layout_marginRight="10dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/ShowPercent"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true" />-->
 
 </RelativeLayout>

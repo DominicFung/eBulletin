@@ -8,26 +8,34 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState;
+
+import junit.runner.Version;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -43,13 +51,12 @@ import fung.dominic.eBulletin.GCMconnection.QuickstartPreferences;
 import fung.dominic.eBulletin.GCMconnection.RegistrationIntentService;
 
 
-public class PageScroll extends FragmentActivity implements Observer{
+public class PageScroll extends AppCompatActivity implements Observer{
 
     public static customViewPager viewPager = null;
+    public static TabLayout tabStrip = null;
     Fragment fragment = null;
     SlidingUpPanelLayout mLayout = null;
-    CheckBox OpenOnStart, ExternalReader;
-    Switch Notifications;
     Button CheckUpdates;
     AlertDialog ShowAlert;
     AlertDialog.Builder timeOut;
@@ -161,39 +168,14 @@ public class PageScroll extends FragmentActivity implements Observer{
         MyAdapter myAdapter = new MyAdapter(fragmentManager);
         viewPager.setAdapter(myAdapter);
 
+        // Give the TabLayout the ViewPager
+        tabStrip = (TabLayout) findViewById(R.id.tabStrip);
+        tabStrip.setupWithViewPager(viewPager);
+
         mLayout = (SlidingUpPanelLayout)findViewById(R.id.sliding_layout);
         mLayout.setCoveredFadeColor(Color.TRANSPARENT);
 
-        OpenOnStart = (CheckBox)findViewById(R.id.checkBox2);
-        ExternalReader = (CheckBox)findViewById(R.id.checkBox3);
-        Notifications = (Switch)findViewById(R.id.switch1);
         CheckUpdates = (Button)findViewById(R.id.button);
-
-        OpenOnStart.setChecked(AutoConnect);
-        ExternalReader.setChecked(settings.getBoolean(ReaderMode, true));
-        Notifications.setChecked(settings.getBoolean(NotifyMode, true));
-
-        ExternalReader.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                editor.putBoolean(ReaderMode, ExternalReader.isChecked()).apply();
-            }
-        });
-
-        Notifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                String NotifyMessage;
-
-                if (isChecked)
-                    NotifyMessage = "Notifications: On";
-                else
-                    NotifyMessage = "Notifications: Off";
-
-                Toast.makeText(getApplicationContext(), NotifyMessage, Toast.LENGTH_LONG).show();
-                editor.putBoolean(NotifyMode, Notifications.isChecked()).apply();
-            }
-        });
 
         CheckUpdates.setOnClickListener(buttonCheckUpdatesOnClickListener);
 
@@ -201,7 +183,44 @@ public class PageScroll extends FragmentActivity implements Observer{
         updateCircle.setVisibility(View.GONE);
 
         BootupPage.fromBootup = false;
+        Toolbar tb = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(tb);
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater mi = this.getMenuInflater();
+        super.onCreateOptionsMenu(menu);
+        mi.inflate(R.menu.menu_main, menu);
+        Log.i("Page Scroll", "Create Menu called");
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //just debugz
+        int id = item.getItemId();
+        Log.i("Page Scroll", "Item with id " + id + " was clicked");
+        Intent i;
+        switch(id){
+            case (R.id.action_settings):
+                i = new Intent(this, SettingsActivity.class);
+                startActivity(i);
+                break;
+            case (R.id.action_help):
+                i = new Intent(this, OverflowActivity.class);
+                i.putExtra("fragment", Help.class.getSimpleName());
+                startActivity(i);
+                break;
+            case (R.id.action_about):
+                i = new Intent(this, OverflowActivity.class);
+                i.putExtra("fragment", VersionInformation.class.getSimpleName());
+                startActivity(i);
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -339,7 +358,7 @@ public class PageScroll extends FragmentActivity implements Observer{
 
         @Override
         public int getCount() {
-            return 4;
+            return 3;
         }
 
         @Override
@@ -347,13 +366,12 @@ public class PageScroll extends FragmentActivity implements Observer{
 
             if (position == 0){
                 fragment = new MainSocket();
-            }else if (position == 1){
+            }else if (position == 1) {
                 fragment = new SundayDatePicker();
-            }else if (position == 2){
-                fragment = new Help();
-            }else if (position == 3){
-                fragment = new VersionInformation();
+            }else if (position == 2) {
+                fragment = new ConnectToChurch();
             }
+            fragment.setHasOptionsMenu(true);
             return fragment;
         }
 
@@ -368,6 +386,19 @@ public class PageScroll extends FragmentActivity implements Observer{
         public void destroyItem(ViewGroup container, int position, Object object) {
             registeredFragments.remove(position);
             super.destroyItem(container, position, object);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            if (position == 0){
+                return "Bulletin";
+            }else if (position == 1){
+                return "Archive";
+            }else if (position==2){
+                return "Connect";
+            }else{
+                return "View";
+            }
         }
     }
 
@@ -389,19 +420,6 @@ public class PageScroll extends FragmentActivity implements Observer{
     @Override
     protected void onStop() {
         super.onStop();
-
-        OpenOnStart = (CheckBox)findViewById(R.id.checkBox2);
-        ExternalReader = (CheckBox)findViewById(R.id.checkBox3);
-        Notifications = (Switch)findViewById(R.id.switch1);
-
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(AutoConnectMode, OpenOnStart.isChecked());
-        editor.putBoolean(ReaderMode, ExternalReader.isChecked());
-        editor.putBoolean(NotifyMode, Notifications.isChecked());
-        editor.putBoolean(QuickstartPreferences.IS_APP_RUNNING, false);
-
-        editor.commit();
     }
 
 

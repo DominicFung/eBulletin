@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -56,7 +57,7 @@ public class SundayDatePicker extends Fragment {
     final static String MONTH_ID = "MONTH";
     final static String YEAR_ID = "YEAR";
     NumberPicker pickYear, pickMonth, pickDay;
-    Button Retrieve, back;
+    LinearLayout Retrieve;
     Configuration Config;
     NotificationManager nm;
     private final String[] Months = {"January","February","March","April","May","June","July",
@@ -188,8 +189,7 @@ public class SundayDatePicker extends Fragment {
         pickYear = (NumberPicker)v.findViewById(R.id.YearPicker);
         pickMonth = (NumberPicker)v.findViewById(R.id.MonthPicker);
         pickDay = (NumberPicker)v.findViewById(R.id.DayPicker);
-        Retrieve = (Button)v.findViewById(R.id.buttonRetrieve);
-        back = (Button)v.findViewById(R.id.backButton2);
+        Retrieve = (LinearLayout)v.findViewById(R.id.buttonRetrieve);
 
         pickYear.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         pickMonth.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
@@ -220,16 +220,6 @@ public class SundayDatePicker extends Fragment {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 findSundays(pickYear.getValue(), newVal);
-            }
-        });
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customViewPager vp = (customViewPager)getActivity().findViewById(R.id.pager);
-
-                if(vp.isPSEnabled())
-                    vp.setCurrentItem(0);
             }
         });
 

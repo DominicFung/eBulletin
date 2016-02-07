@@ -11,8 +11,12 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -37,7 +41,7 @@ import java.net.Socket;
 import fung.dominic.eBulletin.GCMconnection.QuickstartPreferences;
 import fung.dominic.eBulletin.GCMconnection.RegistrationIntentService;
 
-public class BootupPage extends Activity{
+public class BootupPage extends AppCompatActivity{
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 

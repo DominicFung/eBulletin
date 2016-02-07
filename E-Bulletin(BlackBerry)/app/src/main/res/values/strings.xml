@@ -1,8 +1,77 @@
 <resources>
-    <string name="app_name">eBulletin</string>
+    <string name="app_name">MCAC Bulletin App</string>
 
-    <string name="hello_world">Hello world!</string>
+    <!--Menu Strings -->
+    <string name="action_archives">Read Old Bulletins</string>
     <string name="action_settings">Settings</string>
+    <string name="action_help">Help</string>
+    <string name="action_about">About</string>
+
+    <!--Title Strings -->
+    <string name="settings_name">Settings</string>
+    <string name="general_name">Info</string>
+
+    <!--Help Page Text -->
+    <string name="connectionText1">Ensure that you are connected to the internet through your data plan or a wireless fidelity. If you are currently in the MCAC building you may connect to our LAN:</string>
+    <string name="wifiTag">Wifi SSID:</string>
+    <string name="passwordTag">Password:</string>
+    <string name="textView5">* There is currently no LAN set up in version 3.1 stay tuned!</string>
+    <string name="wifiWarn">Note: This Wifi will disconnect once download is complete!</string>
+    <string name="connectionText2">If problems persist, the server may be down, please contact the app support team.</string>
+    <string name="connectionText3">When opening the bulletin, please use a third party PDF viewer to open the bulletin. The built in viewer currently has problems.</string>
+    <string name="troubleFaq1">Corrupt file/Could not open</string>
+    <string name="troubleAns1">The file may not have downloaded properly. Try downloading again. If problem persist contact Dominic Fung. You can find his information in the \'About\' page.</string>
+    <string name="troubleFaq2">App stays on loading screen</string>
+    <string name="troubleAns2">This is a critical problem. Contact app support team.</string>
+    <string name="troubleFaq3">Get Latest Bulletin is unclickable</string>
+    <string name="troubleAns3">Use the &quot;Check for Updates&quot; button in the slide up panel to check if the server is online. This button will only appear if that is the case. Contact app support team if problems persist.</string>
+
+    <!--About Page Text-->
+    <string name="versionMsg">We are currently on a Beta version of this app:</string>
+    <string name="versionTag">Version:</string>
+    <string name="versionNumber">3.1</string>
+    <string name="feature1">Button name changes to make the app more intuitive</string>
+    <string name="feature2">New status tab added</string>
+    <string name="feature3">Notifications (integration of Google Cloud Messaging) added</string>
+    <string name="feature4">New communications protocol implemented</string>
+    <string name="feature5">Archives page and functionality added</string>
+    <string name="commentsFeedbackMsg">If you have questions, comments or feedback, contact the app support team or send them to Dominic Fung: {EMAIL}</string>
+    <string name="creatorTxt">Created by Dominic Fung and the App team</string>
+
+    <!--Church Connect Text-->
+    <string name="service1">Early Morning Cantonese Worship</string>
+    <string name="service1Time">Sunday, 815am</string>
+    <string name="service2">English Worship</string>
+    <string name="service2Time">Sunday, 9:30am</string>
+    <string name="service3">Fluid Youth Worship</string>
+    <string name="service3Time">Sunday, 9:30am</string>
+    <string name="service4">Cantonese Worship</string>
+    <string name="service4Time">Sunday, 11:15am</string>
+    <string name="service5">Mandarin Worship</string>
+    <string name="service5Time">Sunday, 11:15am</string>
+
+    <string name="group1">Galilee/Jireh Small Groups</string>
+    <string name="group1Leader">Joe &amp; Wendy Mang</string>
+    <string name="group1Contact">gossible@yahoo.ca</string>
+    <string name="group2">Young Couples Small Group</string>
+    <string name="group2Leader">Marc &amp; Bonnie Wong</string>
+    <string name="group2Contact">iceman.onizuka@gmail.com</string>
+    <string name="group3">Kaleo Fellowship (University/College)</string>
+    <string name="group3Leader">Pastor John</string>
+    <string name="group3Contact">jmah88@yahoo.com</string>
+    <string name="group4">Young Adults Small Group</string>
+    <string name="group4Leader">Kevin &amp; Vicki Chui</string>
+    <string name="group4Contact">youngcareersmcac@gmail.com</string>
+    <string name="group5">Young Careers 1</string>
+    <string name="group5Leader">David &amp; Emily Yu</string>
+    <string name="group5Contact">davidpkyu@gmail.com</string>
+    <string name="group6">Young Careers 2</string>
+    <string name="group6Leader">York &amp; Angelica Lim</string>
+    <string name="group6Contact">helloyork@gmail.com</string>
+
     <string name="gcm_send_message">gcm_send_message</string>
     <string name="token_error_message">token_error_message</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

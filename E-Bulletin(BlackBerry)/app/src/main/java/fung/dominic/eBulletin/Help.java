@@ -3,18 +3,13 @@ package fung.dominic.eBulletin;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
+
 
 public class Help extends Fragment {
 
-    Button buttonBack, buttonVersion;
     Configuration Config;
     View v;
 
@@ -33,41 +28,8 @@ public class Help extends Fragment {
         return rView;
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        v = getView();
-
-        buttonBack = (Button)v.findViewById(R.id.Back);
-        buttonVersion = (Button)v.findViewById(R.id.version);
-
-        buttonBack.setOnClickListener((buttonBackOnClickListener));
-        buttonVersion.setOnClickListener((buttonVersionOnClickListener));
-
-        String s = "If problems persist, the server maybe down, please contact Dominic Fung: <b><u>fung_dominic@hotmail.com</u></b>";
-        TextView set = (TextView)v.findViewById(R.id.contactInfo);
-        set.setText(Html.fromHtml(s));
-    }
-
-    View.OnClickListener buttonVersionOnClickListener = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-
-            ViewPager vp = (ViewPager)getActivity().findViewById(R.id.pager);
-            vp.setCurrentItem(3);
-
-        }
-    };
-
-
-    View.OnClickListener buttonBackOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-            ViewPager vp = (ViewPager)getActivity().findViewById(R.id.pager);
-            vp.setCurrentItem(0);
-
-        }
-    };
+//    @Override
+//    public void onActivityCreated(Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//    }
 }

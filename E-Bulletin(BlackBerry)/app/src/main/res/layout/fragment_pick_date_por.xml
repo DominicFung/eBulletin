@@ -3,7 +3,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/DatePickerRelativeLayout"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:theme="@style/AppTheme.Page">
 
     <TextView
         android:layout_width="wrap_content"
@@ -13,22 +14,45 @@
         android:id="@+id/textView17"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="15dp" />
 
-    <Button
+    <LinearLayout
+        android:id="@+id/buttonRetrieve"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="retrieve"
-        android:id="@+id/buttonRetrieve"
-        android:layout_marginTop="76dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:layout_marginTop="15dp"
         android:layout_below="@+id/MonthPicker"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:padding="10dp"
+        android:background="@drawable/lightbuttonshape"
+        >
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="5dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/view_file_96" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:text="View Bulletin"
+            android:textColor="#fff"/>
+
+    </LinearLayout>
 
     <NumberPicker
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/MonthPicker"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="55dp"
         android:layout_below="@+id/textView17"
         android:layout_centerHorizontal="true" />
 
@@ -52,10 +76,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Choose the Bulletin Issue Date:"
+        android:text="Select a bulletin date..."
+        android:textColor="@android:color/white"
         android:id="@+id/textView18"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
         android:layout_above="@+id/YearPicker"
         android:layout_marginBottom="10dp" />
 
@@ -76,18 +100,5 @@
         android:layout_above="@+id/progressBar2"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="back"
-        android:id="@+id/backButton2"
-        android:background="@null"
-        android:singleLine="true"
-        android:layout_alignTop="@+id/buttonRetrieve"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
-        android:textColor="#ff0000ff" />
 
 </RelativeLayout>

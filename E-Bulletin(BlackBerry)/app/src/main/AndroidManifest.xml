@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fung.dominic.eBulletin" >
-
     //for GCM communication
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-    <permission android:name="fung.dominic.eBulletin.GCMconnection.permission.C2D_MESSAGE"
+    <permission
+        android:name="fung.dominic.eBulletin.GCMconnection.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
     <uses-permission android:name="fung.dominic.mcacbulletinv_2.GCMconnection.permission.C2D_MESSAGE" />
+
+    <service
+        android:name=".MyInstanceIDListenerService"
+        android:exported="false" >
+        <intent-filter>
+            <action android:name="com.google.android.gms.iid.InstanceID" />
+        </intent-filter>
+    </service>
 
     <application
         android:allowBackup="true"
@@ -18,58 +26,67 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="fung.dominic.eBulletin.BootupPage"
+            android:name=".BootupPage"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="fung.dominic.eBulletin.PageScroll"
+        <activity
+            android:name=".PageScroll"
             android:label="@string/app_name" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/settings_name"
+            android:parentActivityName=".PageScroll" />
+        <activity
+            android:name=".OverflowActivity"
+            android:parentActivityName=".PageScroll"
+            android:label="@string/general_name" />
 
-        <activity android:name="fung.dominic.eBulletin.ShowBulletin" android:label="@string/app_name">
+        <activity
+            android:name=".ShowBulletin"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.example.gcm" />
+
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
             </intent-filter>
         </receiver>
 
         <service
-            android:name="fung.dominic.eBulletin.GCMconnection.MyGcmListenerService"
+            android:name=".GCMconnection.MyGcmListenerService"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
         <service
-            android:name="fung.dominic.eBulletin.GCMconnection.MyInstanceIDListenerService"
-            android:exported="false">
+            android:name=".GCMconnection.MyInstanceIDListenerService"
+            android:exported="false" >
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID"/>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
-        <service android:name="fung.dominic.eBulletin.GCMconnection.RegistrationIntentService"
+        <service
+            android:name=".GCMconnection.RegistrationIntentService"
             android:exported="false" />
     </application>
-
-    <service android:name=".MyInstanceIDListenerService" android:exported="false">
-        <intent-filter>
-            <action android:name="com.google.android.gms.iid.InstanceID"/>
-        </intent-filter>
-    </service>
 
 </manifest>

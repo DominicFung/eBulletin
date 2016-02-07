@@ -1,8 +1,36 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/blue800</item>
+        <item name="colorPrimaryDark">@color/blue900</item>
+        <item name="android:textColorPrimary">#fff</item>
+        <item name="android:windowBackground">@drawable/background</item>
+        <item name="colorAccent">@color/blue900</item>
+    </style>
+
+    <!-- Menu Toolbar Theme -->
+    <style name="ToolbarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:background">@color/blue800</item>
+        <item name="android:textColorPrimary">#fff</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:actionMenuTextColor">#fff</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    </style>
+
+    <!-- Tab Strip Theme -->
+    <style name="TabStripTheme" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/mango</item>
+        <item name="tabBackground">@color/blue800</item>
+        <item name="tabSelectedTextColor">#fff</item>
+    </style>
+
+    <style name="AppTheme.Page">
+        <item name="android:textColorPrimary">@color/primGrey</item>
+        <!--<item name="android:textColorSecondary">#4e555e</item>-->
     </style>
 
 </resources>

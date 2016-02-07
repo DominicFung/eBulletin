@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:title="App Settings">
+    <CheckBoxPreference android:title="Auto-open Bulletin On Start"
+        android:defaultValue="false"
+        android:summary="Open the newest bulletin on app start"
+        android:key="AutoConnectMode"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <CheckBoxPreference android:title="Use External PDF Reader"
+        android:defaultValue="true"
+        android:summary="Open bulletin with an external file reader"
+        android:key="ReaderMode"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <SwitchPreference android:title="Phone Notifications"
+        android:defaultValue="true"
+        android:key="NotifyMode"
+        android:summary="Enable phone notifications for this app"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+</PreferenceScreen>

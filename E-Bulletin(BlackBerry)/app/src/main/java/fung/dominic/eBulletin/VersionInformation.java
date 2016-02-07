@@ -4,15 +4,16 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class VersionInformation extends Fragment {
 
-    Button buttonBack;
     Configuration Config;
     View v;
 
@@ -34,20 +35,10 @@ public class VersionInformation extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        v = getView();
-
-        buttonBack = (Button) v.findViewById(R.id.Back);
-
-        buttonBack.setOnClickListener((buttonBackOnClickListener));
+        View v = getView();
+        String feedBackMsg = getResources().getString(R.string.commentsFeedbackMsg);
+        feedBackMsg = feedBackMsg.replace("{EMAIL}","<b><u>fung_dominic@hotmail.com</u></b>");
+        TextView feedbackEle = (TextView)v.findViewById(R.id.commentsFeedbackMsg);
+        feedbackEle.setText(Html.fromHtml(feedBackMsg));
     }
-
-    View.OnClickListener buttonBackOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-            ViewPager vp = (ViewPager)getActivity().findViewById(R.id.pager);
-            vp.setCurrentItem(2);
-
-        }
-    };
 }

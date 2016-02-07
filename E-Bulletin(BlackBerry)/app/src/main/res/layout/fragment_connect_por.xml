@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="800dp"
+        android:padding="16dp"
+        android:id="@+id/connectToChurchLayout"
+        android:theme="@style/AppTheme.Page">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Worship"
+            android:id="@+id/worshipTitle"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp" />
+        <View
+            android:id="@+id/worshipDivider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/worshipTitle"
+            android:background="@color/blue800" />
+
+        <TableLayout
+            android:id="@+id/worshipServices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/worshipTitle"
+            android:layout_marginTop="20dp">
+            <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:weightSum="1" android:layout_marginBottom="8dp">
+                <TextView
+                    android:layout_weight="0.6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/service1"
+                    android:text="@string/service1"
+                    android:textColor="@color/blue900"/>
+                <TextView
+                    android:layout_weight="0.4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/service1Time"
+                    android:text="@string/service1Time"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="right"/>
+            </TableRow>
+            <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:weightSum="1" android:layout_marginBottom="8dp">
+                <TextView
+                    android:layout_weight="0.6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/service2"
+                    android:text="@string/service2"
+                    android:textColor="@color/blue900"/>
+                <TextView
+                    android:layout_weight="0.4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/service2Time"
+                    android:text="@string/service2Time"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="right"/>
+            </TableRow>
+            <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:weightSum="1" android:layout_marginBottom="8dp">
+                <TextView
+                    android:layout_weight="0.6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/service3"
+                    android:text="@string/service3"
+                    android:textColor="@color/blue900"/>
+                <TextView
+                    android:layout_weight="0.4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/service3Time"
+                    android:text="@string/service3Time"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="right"/>
+            </TableRow>
+            <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:weightSum="1" android:layout_marginBottom="8dp">
+                <TextView
+                    android:layout_weight="0.6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/service4"
+                    android:text="@string/service4"
+                    android:textColor="@color/blue900"/>
+                <TextView
+                    android:layout_weight="0.4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/service4Time"
+                    android:text="@string/service4Time"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="right"/>
+            </TableRow>
+            <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:weightSum="1" android:layout_marginBottom="8dp">
+                <TextView
+                    android:layout_weight="0.6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/service5"
+                    android:text="@string/service5"
+                    android:textColor="@color/blue900"/>
+                <TextView
+                    android:layout_weight="0.4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/service5Time"
+                    android:text="@string/service5Time"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="right"/>
+            </TableRow>
+
+        </TableLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Fellowship &amp; Small Groups"
+            android:id="@+id/groupsTitle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/worshipServices"
+            android:layout_marginTop="33dp" />
+        <View
+            android:id="@+id/groupsDivider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/groupsTitle"
+            android:background="@color/blue800" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/groupsDivider"
+            android:layout_marginTop="20dp"
+            android:id="@+id/group1"
+            android:text="@string/group1"
+            android:textColor="@color/blue900" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/group1"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/group1Leader"
+            android:text="@string/group1Leader"
+            android:textColor="@color/blueA400"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/group1Leader"
+            android:layout_toRightOf="@+id/group1Leader"
+            android:gravity="right"
+            android:id="@+id/group1Contact"
+            android:text="@string/group1Contact" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/group1Leader"
+            android:layout_marginTop="20dp"
+            android:id="@+id/group2"
+            android:text="@string/group2"
+            android:textColor="@color/blue900" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/group2"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/group2Leader"
+            android:text="@string/group2Leader"
+            android:textColor="@color/blueA400"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/group2Leader"
+            android:layout_toRightOf="@+id/group2Leader"
+            android:gravity="right"
+            android:id="@+id/group2Contact"
+            android:text="@string/group2Contact" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/group2Leader"
+            android:layout_marginTop="20dp"
+            android:id="@+id/group3"
+            android:text="@string/group3"
+            android:textColor="@color/blue900" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/group3"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/group3Leader"
+            android:text="@string/group3Leader"
+            android:textColor="@color/blueA400"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/group3Leader"
+            android:layout_toRightOf="@+id/group3Leader"
+            android:gravity="right"
+            android:id="@+id/group3Contact"
+            android:text="@string/group3Contact" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/group3Leader"
+            android:layout_marginTop="20dp"
+            android:id="@+id/group4"
+            android:text="@string/group4"
+            android:textColor="@color/blue900" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/group4"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/group4Leader"
+            android:text="@string/group4Leader"
+            android:textColor="@color/blueA400"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/group4Leader"
+            android:layout_toRightOf="@+id/group4Leader"
+            android:gravity="right"
+            android:id="@+id/group4Contact"
+            android:text="@string/group4Contact" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/group4Leader"
+            android:layout_marginTop="20dp"
+            android:id="@+id/group5"
+            android:text="@string/group5"
+            android:textColor="@color/blue900" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/group5"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/group5Leader"
+            android:text="@string/group5Leader"
+            android:textColor="@color/blueA400"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/group5Leader"
+            android:layout_toRightOf="@+id/group5Leader"
+            android:gravity="right"
+            android:id="@+id/group5Contact"
+            android:text="@string/group5Contact" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/group5Leader"
+            android:layout_marginTop="20dp"
+            android:id="@+id/group6"
+            android:text="@string/group6"
+            android:textColor="@color/blue900" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/group6"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/group6Leader"
+            android:text="@string/group6Leader"
+            android:textColor="@color/blueA400"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/group6Leader"
+            android:layout_toRightOf="@+id/group6Leader"
+            android:gravity="right"
+            android:id="@+id/group6Contact"
+            android:text="@string/group6Contact" />
+    </RelativeLayout>
+</ScrollView>

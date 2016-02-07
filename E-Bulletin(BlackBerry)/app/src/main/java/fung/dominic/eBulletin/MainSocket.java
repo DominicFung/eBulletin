@@ -17,12 +17,19 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,8 +54,8 @@ import fung.dominic.eBulletin.GCMconnection.QuickstartPreferences;
 
 public class MainSocket extends Fragment {
 
-    TextView textResponse, percentage, StatusText;
-    Button buttonConnect, buttonPref, buttonHelp, buttonOpenWith, buttonArchive;
+    TextView textResponse, percentage;
+    LinearLayout z_buttonPref, z_buttonOpenWith, z_buttonConnect, statusContainer;
     AlertDialog ShowAlert;
     public static final String IPaddress = "192.0.215.122";//192.168.2.107
     public static final int PORT = 8203;
@@ -77,7 +84,6 @@ public class MainSocket extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.activity_main_socket, container, false);
     }
 
@@ -90,15 +96,12 @@ public class MainSocket extends Fragment {
         nm = (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 
         assert v != null;
-        buttonConnect = (Button)v.findViewById(R.id.connect);
-        buttonPref = (Button)v.findViewById(R.id.pref);
+        z_buttonConnect = (LinearLayout)v.findViewById(R.id.connect);
+        z_buttonPref = (LinearLayout)v.findViewById(R.id.pref);
         textResponse = (TextView)v.findViewById(R.id.response);
         loadCircle = (ProgressBar)v.findViewById(R.id.Loading);
-        buttonHelp = (Button)v.findViewById(R.id.Help);
-        buttonOpenWith = (Button)v.findViewById(R.id.openWith);
-        buttonArchive = (Button)v.findViewById(R.id.ArchiveButton);
+        z_buttonOpenWith = (LinearLayout)v.findViewById(R.id.openWith);
         percentage = (TextView)v.findViewById(R.id.ShowPercent);
-        StatusText = (TextView)v.findViewById(R.id.textView16);
 
         percentage.setVisibility(View.GONE);
         loadCircle.setVisibility(View.GONE);
@@ -109,7 +112,8 @@ public class MainSocket extends Fragment {
         if (!as.exists()){
             isOpenable = false;
         }
-        buttonOpenWith.setEnabled(isOpenable);
+
+        setButtonState(z_buttonOpenWith, isOpenable);
 
         SharedPreferences settings = this.getActivity().getSharedPreferences(PageScroll.PREFS_NAME, Context.MODE_PRIVATE);
 
@@ -123,24 +127,18 @@ public class MainSocket extends Fragment {
 
         }
 
-        buttonConnect.setOnClickListener(buttonConnectOnClickListener);
-        buttonPref.setOnClickListener((buttonPrefOnClickListener));
-        buttonHelp.setOnClickListener((buttonHelpOnClickListener));
-        buttonOpenWith.setOnClickListener((buttonReopenOnClickListener));
-        buttonArchive.setOnClickListener(buttonArchiveOnClickListener);
+        z_buttonConnect.setOnClickListener(buttonConnectOnClickListener);
+        z_buttonPref.setOnClickListener((buttonPrefOnClickListener));
+        z_buttonOpenWith.setOnClickListener((buttonReopenOnClickListener));
 
         boolean ServerOnline = settings.getBoolean(ServerStatusMode,true);
-        if (ServerOnline){
-            buttonConnect.setEnabled(true);
-            StatusText.setTextColor(Color.RED);
-            StatusText.setTypeface(null, Typeface.NORMAL);
-            StatusText.setText("Server: Online");
+        if (ServerOnline){ //This code can be simplified greatly setButtonState(button, ServerOnline) for example
+            setButtonState(z_buttonConnect, true);
+            setServerState(true);
             Log.i("MainSocket","Online Look");
         }else {
-            buttonConnect.setEnabled(false);
-            StatusText.setTextColor(Color.RED);
-            StatusText.setTypeface(null, Typeface.NORMAL);
-            StatusText.setText("Server: Offline");
+            setButtonState(z_buttonConnect, false);
+            setServerState(false);
             Log.i("MainSocket","Offline Look");
         }
     }
@@ -157,7 +155,7 @@ public class MainSocket extends Fragment {
         if(QuickstartPreferences.ProgressShow){
             percentage.setVisibility(View.VISIBLE);
             loadCircle.setVisibility(View.VISIBLE);
-            buttonConnect.setEnabled(true);
+            setButtonState(z_buttonConnect, true);
         }
 
         if(settings.getBoolean(QuickstartPreferences.WAS_DOWNLOADING, false)){
@@ -240,7 +238,7 @@ public class MainSocket extends Fragment {
                 customViewPager vp = (customViewPager) getActivity().findViewById(R.id.pager);
                 vp.setPSEnabled(true);
 
-                buttonOpenWith.setEnabled(isOpenable);
+                setButtonState(z_buttonOpenWith, isOpenable);
                 percentage.setVisibility(View.GONE);
                 loadCircle.setVisibility(View.GONE);
                 QuickstartPreferences.ProgressShow = false;
@@ -254,14 +252,24 @@ public class MainSocket extends Fragment {
         Log.i("MainSocket", "onPause");
     }
 
+    public void setButtonState(LinearLayout ll, Boolean canConnect){
+        if(canConnect){
+            ll.setBackgroundResource(R.drawable.lightbuttonshape);
+            ll.setClickable(true);
+        }else {
+            ll.setBackgroundResource(R.drawable.lightbuttonshape_disable);
+            ll.setClickable(false);
+        }
+    }
+
     public void setPendingLook(){
         MainSocket.this.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
 
-                StatusText.setTextColor(Color.MAGENTA);
-                StatusText.setTypeface(null, Typeface.ITALIC);
-                StatusText.setText("Pending...");
+                //StatusText.setTextColor(Color.MAGENTA);
+                //StatusText.setTypeface(null, Typeface.ITALIC);
+                //StatusText.setText("Pending...");
             }
         });
     }
@@ -271,49 +279,30 @@ public class MainSocket extends Fragment {
             @Override
             public void run() {
 
-                buttonConnect.setEnabled(false);
-                StatusText.setTextColor(Color.RED);
-                StatusText.setTypeface(null, Typeface.NORMAL);
-                StatusText.setText("Server: Offline");
+                setButtonState(z_buttonConnect, false);
+                setServerState(false);
             }
         });
     }
 
-
+    public void setServerState(Boolean isOn){
+        ImageView iv = (ImageView)this.getView().getRootView().findViewById(R.id.serverStateImg);
+        TextView tv = (TextView)this.getView().getRootView().findViewById(R.id.serverStateMsg);
+        if(isOn){
+            iv.setImageResource(R.drawable.on_circle);
+            tv.setText("Online");
+            tv.setTextColor(getResources().getColor(R.color.primGrey));
+        }else{
+            iv.setImageResource(R.drawable.off_circle);
+            tv.setText("Offline");
+            tv.setTextColor(Color.RED);
+        }
+    }
     OnClickListener buttonPrefOnClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-
-            SlidingUpPanelLayout mLayout = (SlidingUpPanelLayout)getActivity().findViewById(R.id.sliding_layout);
-
-            if(mLayout.getPanelState()== SlidingUpPanelLayout.PanelState.COLLAPSED)
-                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-            else
-                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-
-        }
-    };
-
-    OnClickListener buttonHelpOnClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-            customViewPager vp = (customViewPager) getActivity().findViewById(R.id.pager);
-
-            if(vp.isPSEnabled())
-                vp.setCurrentItem(2);
-        }
-    };
-
-    OnClickListener buttonArchiveOnClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-            customViewPager vp = (customViewPager) getActivity().findViewById(R.id.pager);
-
-            if(vp.isPSEnabled())
-                vp.setCurrentItem(1);
-
+            Intent i = new Intent(getActivity().getApplicationContext(), SettingsActivity.class);
+            startActivity(i);
         }
     };
 
@@ -529,7 +518,7 @@ public class MainSocket extends Fragment {
                                     startActivity(i);
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                    QuickstartPreferences.postingMsg(MainSocket.this, "No Application available to view pdf");
+                                    QuickstartPreferences.postingMsg(MainSocket.this, "No Application available to view PDF");
                                 }
                             }
                         } else {
@@ -550,7 +539,7 @@ public class MainSocket extends Fragment {
                 }
                 else{
                     hasError = 4;
-                    QuickstartPreferences.postingMsg(MainSocket.this, "file was corrupted, please try again");
+                    QuickstartPreferences.postingMsg(MainSocket.this, "File was corrupted, please try again");
                     isOpenable = false;
                 }
             } catch (IllegalArgumentException | UnknownHostException e) {
@@ -615,7 +604,7 @@ public class MainSocket extends Fragment {
                 customViewPager vp = (customViewPager) getActivity().findViewById(R.id.pager);
                 vp.setPSEnabled(true);
 
-                buttonOpenWith.setEnabled(isOpenable);
+                setButtonState(z_buttonOpenWith,isOpenable);
                 percentage.setVisibility(View.GONE);
                 loadCircle.setVisibility(View.GONE);
                 QuickstartPreferences.ProgressShow = false;
@@ -662,22 +651,18 @@ public class MainSocket extends Fragment {
             boolean status = settings.getBoolean(MainSocket.ServerStatusMode, true);
 
             if (status) {
-                buttonConnect.setEnabled(true);
-                StatusText.setTextColor(Color.RED);
-                StatusText.setTypeface(null, Typeface.NORMAL);
-                StatusText.setText("Server: Online");
+                setButtonState(z_buttonConnect,true);
+                setServerState(true);
             }
             else {
-                buttonConnect.setEnabled(false);
-                StatusText.setTextColor(Color.RED);
-                StatusText.setTypeface(null, Typeface.NORMAL);
-                StatusText.setText("Server: Offline");
+                setButtonState(z_buttonConnect,false);
+                setServerState(false);
             }
 
             if (intent.getBooleanExtra("PENDING",false)){
-                StatusText.setTextColor(Color.MAGENTA);
-                StatusText.setTypeface(null, Typeface.ITALIC);
-                StatusText.setText("Pending...");
+                //StatusText.setTextColor(Color.MAGENTA);
+                //StatusText.setTypeface(null, Typeface.ITALIC);
+                //StatusText.setText("Pending...");
             }
         }
     };
