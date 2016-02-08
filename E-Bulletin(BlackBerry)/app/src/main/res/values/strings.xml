@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MCAC Bulletin App</string>
+    <string name="app_name">MCAC eBulletin</string>
 
     <!--Menu Strings -->
     <string name="action_archives">Read Old Bulletins</string>
@@ -40,7 +40,7 @@
 
     <!--Church Connect Text-->
     <string name="service1">Early Morning Cantonese Worship</string>
-    <string name="service1Time">Sunday, 815am</string>
+    <string name="service1Time">Sunday, 8:15am</string>
     <string name="service2">English Worship</string>
     <string name="service2Time">Sunday, 9:30am</string>
     <string name="service3">Fluid Youth Worship</string>
@@ -49,6 +49,21 @@
     <string name="service4Time">Sunday, 11:15am</string>
     <string name="service5">Mandarin Worship</string>
     <string name="service5Time">Sunday, 11:15am</string>
+
+    <string name="meetup1">Mandarin Prayer Meeting</string>
+    <string name="meetup1Time">Wednesday, 7:30pm</string>
+    <string name="meetup2">Cantonese Prayer Meeting</string>
+    <string name="meetup2Time">Wednesday, 8:00pm</string>
+    <string name="meetup3">English Prayer Meeting</string>
+    <string name="meetup3Time">Wednesday, 8:00pm</string>
+    <string name="school1">Seekers &amp; New Believers</string>
+    <string name="school1Time">Sunday, 9:30am</string>
+    <string name="school2">Cantonese &amp; Mandarin Adults</string>
+    <string name="school2Time">Sunday, 9:30am</string>
+    <string name="school3">English &amp; Youth</string>
+    <string name="school3Time">Sunday, 11:15am</string>
+    <string name="school4">Children &amp; Preschool</string>
+    <string name="school4Time">Sunday, 11:15am</string>
 
     <string name="group1">Galilee/Jireh Small Groups</string>
     <string name="group1Leader">Joe &amp; Wendy Mang</string>

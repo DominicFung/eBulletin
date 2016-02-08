@@ -20,6 +20,7 @@
     <!-- extra standalone colors used for random stuff -->
     <item name="mango" type="color">#ffc933</item>
     <item name="primGrey" type="color">#384453</item>
+    <item name="linkGrey" type="color">#55677c</item>
 
     <!-- material design colors -->
     <item name="blue" type="color">#FF33B5E5</item>

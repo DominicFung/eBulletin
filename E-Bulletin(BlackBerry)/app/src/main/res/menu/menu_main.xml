@@ -4,19 +4,19 @@
     <item
         android:id="@+id/action_settings"
         android:title="@string/action_settings"
-        android:icon="@drawable/settings_24"
+        android:icon="@drawable/settings_96"
         android:orderInCategory="101"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_help"
         android:title="@string/action_help"
-        android:icon="@drawable/questions_24"
+        android:icon="@drawable/help_96"
         android:orderInCategory="102"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_about"
         android:title="@string/action_about"
-        android:icon="@drawable/questions_24"
+        android:icon="@drawable/info_96"
         android:orderInCategory="103"
         app:showAsAction="never" />
 

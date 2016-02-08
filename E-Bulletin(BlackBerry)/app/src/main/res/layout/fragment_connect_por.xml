@@ -5,7 +5,7 @@
     <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="800dp"
+        android:layout_height="950dp"
         android:padding="16dp"
         android:id="@+id/connectToChurchLayout"
         android:theme="@style/AppTheme.Page">
@@ -125,12 +125,155 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Sunday School &amp; Prayer"
+            android:id="@+id/schoolTitle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/worshipServices"
+            android:layout_marginTop="28dp" />
+        <View
+            android:id="@+id/schoolDivider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/schoolTitle"
+            android:background="@color/blue800" />
+        <TableLayout
+            android:id="@+id/sundaySchool"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/schoolTitle"
+            android:layout_marginTop="20dp">
+            <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:weightSum="1" android:layout_marginBottom="8dp">
+                <TextView
+                    android:layout_weight="0.6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/school1"
+                    android:text="@string/school1"
+                    android:textColor="@color/blue900"/>
+                <TextView
+                    android:layout_weight="0.4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/school1Time"
+                    android:text="@string/school1Time"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="right"/>
+            </TableRow>
+            <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:weightSum="1" android:layout_marginBottom="8dp">
+                <TextView
+                    android:layout_weight="0.6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/school2"
+                    android:text="@string/school2"
+                    android:textColor="@color/blue900"/>
+                <TextView
+                    android:layout_weight="0.4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/school2Time"
+                    android:text="@string/school2Time"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="right"/>
+            </TableRow>
+            <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:weightSum="1" android:layout_marginBottom="8dp">
+                <TextView
+                    android:layout_weight="0.6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/school3"
+                    android:text="@string/school3"
+                    android:textColor="@color/blue900"/>
+                <TextView
+                    android:layout_weight="0.4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/school3Time"
+                    android:text="@string/school3Time"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="right"/>
+            </TableRow>
+            <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:weightSum="1" android:layout_marginBottom="8dp">
+                <TextView
+                    android:layout_weight="0.6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/school4"
+                    android:text="@string/school4"
+                    android:textColor="@color/blue900"/>
+                <TextView
+                    android:layout_weight="0.4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/school4Time"
+                    android:text="@string/school4Time"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="right"/>
+            </TableRow>
+            <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:weightSum="1" android:layout_marginBottom="8dp">
+                <TextView
+                    android:layout_weight="0.6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/meetup1"
+                    android:text="@string/meetup1"
+                    android:textColor="@color/blue900"/>
+                <TextView
+                    android:layout_weight="0.4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/meetup1Time"
+                    android:text="@string/meetup1Time"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="right"/>
+            </TableRow>
+            <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:weightSum="1" android:layout_marginBottom="8dp">
+                <TextView
+                    android:layout_weight="0.6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/meetup2"
+                    android:text="@string/meetup2"
+                    android:textColor="@color/blue900"/>
+                <TextView
+                    android:layout_weight="0.4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/meetup2Time"
+                    android:text="@string/meetup2Time"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="right"/>
+            </TableRow>
+            <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:weightSum="1" android:layout_marginBottom="8dp">
+                <TextView
+                    android:layout_weight="0.6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/meetup3"
+                    android:text="@string/meetup3"
+                    android:textColor="@color/blue900"/>
+                <TextView
+                    android:layout_weight="0.4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/meetup3Time"
+                    android:text="@string/meetup3Time"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="right"/>
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Fellowship &amp; Small Groups"
             android:id="@+id/groupsTitle"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@id/worshipServices"
-            android:layout_marginTop="33dp" />
+            android:layout_below="@id/sundaySchool"
+            android:layout_marginTop="28dp" />
         <View
             android:id="@+id/groupsDivider"
             android:layout_width="match_parent"
@@ -162,7 +305,8 @@
             android:layout_toRightOf="@+id/group1Leader"
             android:gravity="right"
             android:id="@+id/group1Contact"
-            android:text="@string/group1Contact" />
+            android:text="@string/group1Contact"
+            android:autoLink="email"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -188,7 +332,8 @@
             android:layout_toRightOf="@+id/group2Leader"
             android:gravity="right"
             android:id="@+id/group2Contact"
-            android:text="@string/group2Contact" />
+            android:text="@string/group2Contact"
+            android:autoLink="email"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -214,7 +359,8 @@
             android:layout_toRightOf="@+id/group3Leader"
             android:gravity="right"
             android:id="@+id/group3Contact"
-            android:text="@string/group3Contact" />
+            android:text="@string/group3Contact"
+            android:autoLink="email"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -240,7 +386,8 @@
             android:layout_toRightOf="@+id/group4Leader"
             android:gravity="right"
             android:id="@+id/group4Contact"
-            android:text="@string/group4Contact" />
+            android:text="@string/group4Contact"
+            android:autoLink="email"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -266,7 +413,8 @@
             android:layout_toRightOf="@+id/group5Leader"
             android:gravity="right"
             android:id="@+id/group5Contact"
-            android:text="@string/group5Contact" />
+            android:text="@string/group5Contact"
+            android:autoLink="email"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -292,6 +440,7 @@
             android:layout_toRightOf="@+id/group6Leader"
             android:gravity="right"
             android:id="@+id/group6Contact"
-            android:text="@string/group6Contact" />
+            android:text="@string/group6Contact"
+            android:autoLink="email"/>
     </RelativeLayout>
 </ScrollView>

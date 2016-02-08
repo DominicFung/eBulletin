@@ -30,6 +30,7 @@
 
     <style name="AppTheme.Page">
         <item name="android:textColorPrimary">@color/primGrey</item>
+        <item name="android:textColorLink">@color/linkGrey</item>
         <!--<item name="android:textColorSecondary">#4e555e</item>-->
     </style>
 
