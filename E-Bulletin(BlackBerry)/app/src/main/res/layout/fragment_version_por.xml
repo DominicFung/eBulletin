@@ -119,6 +119,16 @@
                     android:id="@+id/feature5"
                     android:layout_marginLeft="5dp"/>
             </TableRow>
+            <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <TextView android:layout_height="wrap_content" android:text="•" android:singleLine="false"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/feature6"
+                    android:id="@+id/feature6"
+                    android:layout_marginLeft="5dp"/>
+            </TableRow>
         </TableLayout>
         <TextView
             android:layout_width="wrap_content"

@@ -35,6 +35,7 @@
     <string name="feature3">Notifications (integration of Google Cloud Messaging) added</string>
     <string name="feature4">New communications protocol implemented</string>
     <string name="feature5">Archives page and functionality added</string>
+    <string name="feature6">Brand new UI experience</string>
     <string name="commentsFeedbackMsg">If you have questions, comments or feedback, contact the app support team or send them to Dominic Fung: {EMAIL}</string>
     <string name="creatorTxt">Created by Dominic Fung and the App team</string>
 
