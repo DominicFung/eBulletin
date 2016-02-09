@@ -20,7 +20,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
@@ -57,7 +56,7 @@ public class SundayDatePicker extends Fragment {
     final static String MONTH_ID = "MONTH";
     final static String YEAR_ID = "YEAR";
     NumberPicker pickYear, pickMonth, pickDay;
-    LinearLayout Retrieve;
+    LinearLayout buttonRetrieve;
     Configuration Config;
     NotificationManager nm;
     private final String[] Months = {"January","February","March","April","May","June","July",
@@ -103,15 +102,15 @@ public class SundayDatePicker extends Fragment {
         SharedPreferences.Editor editor = settings.edit();
 
         if (settings.getBoolean(MainSocket.ServerStatusMode, true)){
-            Retrieve.setEnabled(true);
+            UIHelper.setButtonState(buttonRetrieve, true);
         }else{
-            Retrieve.setEnabled(false);
+            UIHelper.setButtonState(buttonRetrieve, false);
         }
 
         if(QuickstartPreferences.ProgressShow){
             percentage.setVisibility(View.VISIBLE);
             progress.setVisibility(View.VISIBLE);
-            Retrieve.setEnabled(true);
+            UIHelper.setButtonState(buttonRetrieve, true);
         }
 
         if (settings.getBoolean(QuickstartPreferences.WAS_DOWNLOADING, false)){
@@ -189,7 +188,7 @@ public class SundayDatePicker extends Fragment {
         pickYear = (NumberPicker)v.findViewById(R.id.YearPicker);
         pickMonth = (NumberPicker)v.findViewById(R.id.MonthPicker);
         pickDay = (NumberPicker)v.findViewById(R.id.DayPicker);
-        Retrieve = (LinearLayout)v.findViewById(R.id.buttonRetrieve);
+        buttonRetrieve = (LinearLayout)v.findViewById(R.id.buttonRetrieve);
 
         pickYear.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         pickMonth.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
@@ -223,12 +222,12 @@ public class SundayDatePicker extends Fragment {
             }
         });
 
-        Retrieve.setOnClickListener(new View.OnClickListener() {
+        buttonRetrieve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                customViewPager vp = (customViewPager)getActivity().findViewById(R.id.pager);
-                if(vp.isPSEnabled()) {
+                customViewPager vp = (customViewPager) getActivity().findViewById(R.id.pager);
+                if (vp.isPSEnabled()) {
 
                     int[] ChooseDay = new int[DayList.size()];
                     for (int i = 0; i < ChooseDay.length; i++)
@@ -506,7 +505,7 @@ public class SundayDatePicker extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             SharedPreferences settings = SundayDatePicker.this.getActivity().getSharedPreferences(PageScroll.PREFS_NAME, Context.MODE_PRIVATE);
-            Retrieve.setEnabled(settings.getBoolean(MainSocket.ServerStatusMode,true));
+            UIHelper.setButtonState(buttonRetrieve, settings.getBoolean(MainSocket.ServerStatusMode, true));
         }
     };
 
